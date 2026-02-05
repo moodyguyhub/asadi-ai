@@ -97,11 +97,6 @@ export function Contact() {
             {site.links.email}
           </motion.p>
         )}
-
-        <p className="mt-8 text-sm text-zinc-500 flex items-center gap-2">
-          <span className="text-xs">💡</span>
-          Tip: keep your public demos safe; use &quot;request demo&quot; when needed.
-        </p>
       </div>
     </motion.div>
   );
