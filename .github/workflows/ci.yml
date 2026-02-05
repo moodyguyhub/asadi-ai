@@ -22,8 +22,13 @@ jobs:
       - name: Install
         run: npm ci
 
+      - name: Generate Prisma Client
+        run: npx prisma generate
+
       - name: Atlas determinism gate
         run: npm run test:atlas
 
       - name: Build
         run: npm run build
+        env:
+          DATABASE_URL: postgresql://ci:ci@localhost:5432/ci
