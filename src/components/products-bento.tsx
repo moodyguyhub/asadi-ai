@@ -31,14 +31,14 @@ function ProductCard({
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={cn(
-        "glass glass-interactive rounded-3xl p-0 text-left overflow-hidden group cursor-pointer",
+        "glass glass-interactive rounded-3xl p-0 text-left overflow-hidden group cursor-pointer h-full flex flex-col",
         "ring-1 ring-white/5 hover:ring-white/10",
         "focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--background))]",
         colSpan
       )}
     >
       {/* Screenshot on top with built-time badge */}
-      <div className="relative">
+      <div className="relative aspect-[16/10] overflow-hidden">
         <ProductScreenshot
           src={product.screenshot.src}
           alt={product.screenshot.alt}
@@ -52,7 +52,7 @@ function ProductCard({
       </div>
 
       {/* Content below */}
-      <div className="p-5">
+      <div className="p-5 flex-1 flex flex-col">
         <div className="flex items-start justify-between gap-3">
           <div>
             <Badge color="zinc" className="text-xs">{product.industry}</Badge>
@@ -66,7 +66,7 @@ function ProductCard({
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div className="mt-auto pt-4 flex flex-wrap gap-2">
           {product.stack.slice(0, 4).map((t) => (
             <Badge key={t} color="zinc">{t}</Badge>
           ))}
@@ -155,7 +155,7 @@ export function ProductsBento({ products }: { products: Product[] }) {
         </div>
       </motion.div>
 
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-6 gap-5 grid-flow-dense">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-6 gap-5 items-stretch">
         {products.map((p, index) => {
           const spanFor = (pId: string) => {
             if (pId === "truvesta") return "md:col-span-4";
