@@ -303,13 +303,12 @@ export function AtlasWidget() {
     return () => window.removeEventListener("keydown", onKey);
   }, [voiceMode]);
 
-  // Focus input when opened (only in text mode)
+  // Track when opened (no auto-focus - let user choose type or voice)
   useEffect(() => {
-    if (open && !voiceMode) {
+    if (open) {
       trackEvent("atlas_opened", { source: "widget" });
-      setTimeout(() => inputRef.current?.focus(), 50);
     }
-  }, [open, voiceMode]);
+  }, [open]);
 
   // Auto-scroll when new messages arrive
   useEffect(() => {
@@ -484,22 +483,50 @@ export function AtlasWidget() {
 
                   {/* Chips - only show at start */}
                   {msgs.length <= 1 && (
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {SUGGESTED_CHIPS.map((q) => (
-                        <button
-                      key={q}
-                      onClick={() => send(q)}
-                      disabled={isTyping}
-                      className={cn(
-                        "rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/80 hover:bg-white/10 transition",
-                        isTyping && "opacity-50 cursor-not-allowed"
+                    <>
+                      {/* Mode selection buttons */}
+                      {isSpeechSupported() && (
+                        <div className="flex gap-2 mb-3">
+                          <button
+                            onClick={() => inputRef.current?.focus()}
+                            className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80 hover:bg-white/10 transition"
+                          >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            Type
+                          </button>
+                          <button
+                            onClick={() => {
+                              setVoiceMode(true);
+                              trackEvent("atlas_voice_toggle", { enabled: true });
+                            }}
+                            className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-cyan-400/20 bg-cyan-400/10 px-4 py-3 text-sm text-cyan-300 hover:bg-cyan-400/20 transition"
+                          >
+                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                            </svg>
+                            Call
+                          </button>
+                        </div>
                       )}
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              )}
+                      <div className="flex flex-wrap gap-2 pt-2">
+                        {SUGGESTED_CHIPS.map((q) => (
+                          <button
+                            key={q}
+                            onClick={() => send(q)}
+                            disabled={isTyping}
+                            className={cn(
+                              "rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/80 hover:bg-white/10 transition",
+                              isTyping && "opacity-50 cursor-not-allowed"
+                            )}
+                          >
+                            {q}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
 
               {isTyping && msgs[msgs.length - 1]?.role === "user" && (
                 <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 mr-4">
