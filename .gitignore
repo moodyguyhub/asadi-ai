@@ -44,3 +44,4 @@ catalyst-ui-kit.zip
 .env
 .env.local
 .env.production.local
+/src/generated/prisma

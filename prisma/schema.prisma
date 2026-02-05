@@ -1,0 +1,108 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Publisher Models ────────────────────────────────────────────────
+
+/// Connected social accounts (LinkedIn, X) with encrypted tokens.
+model SocialAccount {
+  id                String   @id @default(cuid())
+  platform          String   // "linkedin" | "x"
+  externalAccountId String   // platform user ID
+  displayName       String?  // e.g. "Mahmood Asadi"
+  profileUrl        String?
+  encryptedTokens   String   // AES-256-GCM encrypted JSON blob
+  tokenExpiry       DateTime?
+  scopes            String[] // granted scopes
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  targets           PublisherTarget[]
+
+  @@unique([platform, externalAccountId])
+  @@map("social_accounts")
+}
+
+/// Uploaded media assets with integrity hash.
+model Asset {
+  id         String   @id @default(cuid())
+  storageKey String   // S3/R2 object key
+  mime       String   // "image/png", "image/jpeg", "image/webp"
+  bytes      Int
+  sha256     String   // hex digest
+  width      Int?
+  height     Int?
+  createdAt  DateTime @default(now())
+
+  postAssets PostAsset[]
+
+  @@map("assets")
+}
+
+/// A composed post (platform-agnostic content).
+model PublisherPost {
+  id        String   @id @default(cuid())
+  body      String   // post text
+  linkUrl   String?  // optional link
+  createdBy String   // admin email
+  status    String   @default("draft") // "draft" | "published" | "failed"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assets  PostAsset[]
+  targets PublisherTarget[]
+
+  @@map("publisher_posts")
+}
+
+/// Join table: post ↔ assets (ordered).
+model PostAsset {
+  id      String @id @default(cuid())
+  postId  String
+  assetId String
+  order   Int    @default(0)
+
+  post  PublisherPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  asset Asset        @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, assetId])
+  @@map("post_assets")
+}
+
+/// Per-platform publish attempt with idempotency key.
+model PublisherTarget {
+  id              String   @id @default(cuid())
+  postId          String
+  accountId       String
+  platform        String   // "linkedin" | "x"
+  idempotencyKey  String   @unique // sha256(platform + account + normalized body + link + ordered asset hashes)
+  payloadJson     String?  // platform-specific request JSON (for debugging)
+  platformPostId  String?  // returned post ID from platform
+  platformPostUrl String?  // returned URL
+  status          String   @default("pending") // "pending" | "success" | "failed"
+  error           String?  // error message if failed
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  post    PublisherPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  account SocialAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  @@map("publisher_targets")
+}
+
+/// Immutable audit log for all publisher actions.
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String   // "connect" | "disconnect" | "upload" | "publish_requested" | "publish_succeeded" | "publish_failed"
+  actor     String   // admin email
+  platform  String?  // "linkedin" | "x"
+  details   String?  // JSON blob with extra context
+  createdAt DateTime @default(now())
+
+  @@map("audit_log")
+}
