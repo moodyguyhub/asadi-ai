@@ -11,7 +11,9 @@ type EventName =
   | "cta_linkedin"
   | "cta_download_cv"
   | "atlas_opened"
-  | "atlas_chip_clicked";
+  | "atlas_chip_clicked"
+  | "atlas_voice_toggle"
+  | "atlas_voice_query";
 
 export function trackEvent(event: EventName, properties?: Record<string, string | number | boolean>) {
   // Log to console in dev for verification
