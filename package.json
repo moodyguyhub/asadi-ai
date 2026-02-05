@@ -9,7 +9,8 @@
     "lint": "eslint",
     "lint:app": "eslint --ignore-pattern 'src/components/catalyst/**'",
     "lint:all": "eslint --no-ignore",
-    "cv:pdf": "node scripts/generate-cv.js"
+    "cv:pdf": "node scripts/generate-cv.js",
+    "test": "vitest run"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.9",
@@ -32,6 +33,7 @@
     "eslint-config-next": "16.1.6",
     "puppeteer-core": "^24.37.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^3.2.4"
   }
 }
