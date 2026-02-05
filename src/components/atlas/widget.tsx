@@ -57,9 +57,12 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [status, setStatus] = useState<"idle" | "listening" | "processing" | "speaking">("idle");
   const [transcript, setTranscript] = useState("");
+  const [availableVoices, setAvailableVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoiceURI, setSelectedVoiceURI] = useState<string>("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const preferredVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
   const voicesChangedHandlerRef = useRef<((this: SpeechSynthesis, ev: Event) => any) | null>(null);
+  const introSpokenRef = useRef(false);
   const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastHeardTextRef = useRef<string>("");
   const hasPendingSendRef = useRef(false);
@@ -153,7 +156,9 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
     recognitionRef.current = recognition;
 
     // Preload voices and lock a stable English voice.
+    // Important: do NOT change voice after we start speaking, or users will hear multiple voices.
     const pickEnglishVoice = (voices: SpeechSynthesisVoice[]) => {
+      if (preferredVoiceRef.current) return;
       const score = (v: SpeechSynthesisVoice) => {
         const name = (v.name || "").toLowerCase();
         const lang = (v.lang || "").toLowerCase();
@@ -180,27 +185,72 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
       };
 
       const sorted = [...voices].sort((a, b) => score(b) - score(a));
-      const best = sorted[0] || null;
-      preferredVoiceRef.current = best;
+      preferredVoiceRef.current = sorted[0] || null;
+    };
+
+    const loadSelectedVoice = () => {
+      try {
+        const saved = window.localStorage.getItem("atlas_voice_uri") || "";
+        if (saved) setSelectedVoiceURI(saved);
+      } catch {
+        // ignore
+      }
+    };
+
+    const refreshVoices = () => {
+      if (!isSynthesisSupported()) return;
+      const voices = window.speechSynthesis.getVoices();
+      // Only show English voices in the picker (prevents accidental German selection).
+      const englishVoices = voices.filter((v) => (v.lang || "").toLowerCase().startsWith("en"));
+      setAvailableVoices(englishVoices);
+
+      // If user previously selected a voice, lock to it.
+      const savedUri = (() => {
+        try {
+          return window.localStorage.getItem("atlas_voice_uri") || "";
+        } catch {
+          return "";
+        }
+      })();
+
+      if (savedUri && !preferredVoiceRef.current) {
+        const found = englishVoices.find((v) => v.voiceURI === savedUri) || null;
+        if (found) preferredVoiceRef.current = found;
+      }
+
+      // Otherwise, lock the best English voice.
+      if (!preferredVoiceRef.current) pickEnglishVoice(englishVoices.length ? englishVoices : voices);
     };
 
     if (isSynthesisSupported()) {
-      const initialVoices = window.speechSynthesis.getVoices();
-      if (initialVoices.length) {
-        pickEnglishVoice(initialVoices);
+      loadSelectedVoice();
+      refreshVoices();
+
+      const speakIntroOnce = () => {
+        if (introSpokenRef.current) return;
+        if (!preferredVoiceRef.current) return;
+        introSpokenRef.current = true;
+        speakText("I'm Atlas, Mahmood's Chief of AI Staff. Portfolio scope only. How can I help?");
+      };
+
+      // If voices are already present, we can speak immediately.
+      if (window.speechSynthesis.getVoices().length) {
+        speakIntroOnce();
       } else {
         const onVoicesChanged = () => {
-          const vs = window.speechSynthesis.getVoices();
-          if (vs.length) pickEnglishVoice(vs);
+          refreshVoices();
+          speakIntroOnce();
         };
         voicesChangedHandlerRef.current = onVoicesChanged;
         window.speechSynthesis.addEventListener("voiceschanged", onVoicesChanged);
-        // Cleanup handled below
+
+        // Safety fallback: if voiceschanged never fires, try once after a short delay.
+        setTimeout(() => {
+          refreshVoices();
+          speakIntroOnce();
+        }, 600);
       }
     }
-
-    // Speak intro
-    speakText("I'm Atlas, Mahmood's Chief of AI Staff. Portfolio scope only. How can I help?");
 
     return () => {
       clearSilenceTimer();
@@ -233,19 +283,7 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
 
     // Lock to a stable English voice to avoid mixed-language output.
     const lockedVoice = preferredVoiceRef.current;
-    if (lockedVoice) {
-      utterance.voice = lockedVoice;
-    } else {
-      // Fallback: pick an English voice now (voices list can become available later).
-      const voices = window.speechSynthesis.getVoices();
-      const english = voices.find((v) => (v.lang || "").toLowerCase() === "en-us")
-        || voices.find((v) => (v.lang || "").toLowerCase().startsWith("en-"))
-        || voices.find((v) => (v.lang || "").toLowerCase().startsWith("en"));
-      if (english) {
-        preferredVoiceRef.current = english;
-        utterance.voice = english;
-      }
-    }
+    if (lockedVoice) utterance.voice = lockedVoice;
 
     utterance.onstart = () => {
       setIsSpeaking(true);
@@ -362,6 +400,44 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
       {transcript && (
         <div className="text-xs text-white/40 mb-4 max-w-[200px] truncate">
           &ldquo;{transcript}&rdquo;
+        </div>
+      )}
+
+      {/* Voice picker (English voices only) */}
+      {availableVoices.length > 1 && (
+        <div className="w-full max-w-[260px] mb-4">
+          <label className="block text-[11px] text-white/40 mb-1 text-left">Voice</label>
+          <select
+            value={selectedVoiceURI}
+            onChange={(e) => {
+              const uri = e.target.value;
+              setSelectedVoiceURI(uri);
+              const found = availableVoices.find((v) => v.voiceURI === uri) || null;
+              if (found) preferredVoiceRef.current = found;
+              try {
+                window.localStorage.setItem("atlas_voice_uri", uri);
+              } catch {
+                // ignore
+              }
+            }}
+            className="w-full rounded-xl border border-white/10 bg-black/30 px-3 py-2 text-xs text-white/80"
+          >
+            <option value="" disabled>
+              Select an English voice
+            </option>
+            {availableVoices.map((v) => (
+              <option key={v.voiceURI} value={v.voiceURI}>
+                {v.name} ({v.lang})
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={() => speakText("Voice check. This is Atlas.")}
+            className="mt-2 text-[11px] text-white/40 hover:text-white/60 transition"
+          >
+            Test voice
+          </button>
         </div>
       )}
 
