@@ -10,6 +10,9 @@
     "lint:app": "eslint --ignore-pattern 'src/components/catalyst/**'",
     "lint:all": "eslint --no-ignore",
     "cv:pdf": "node scripts/generate-cv.js",
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:push": "prisma db push",
     "test": "vitest run",
     "test:atlas": "vitest run src/lib/atlas/router.test.ts"
   },
