@@ -24,22 +24,22 @@ export function ProductScreenshot({
     process.env.NODE_ENV === "development" ? `${src}?id=${instanceId}` : src;
 
   // Featured cards get taller screenshots
-  const heightClass = featured ? "h-56 sm:h-64" : "h-44 sm:h-52";
+  const heightClass = featured ? "h-48 sm:h-56 lg:h-64" : "h-40 sm:h-48";
 
   return (
-    <div className={`relative ${heightClass} rounded-t-xl overflow-hidden border-b border-white/10 bg-black/20 ring-1 ring-inset ring-white/5`}>
+    <div className={`relative ${heightClass} overflow-hidden border-b border-white/5 bg-black/30`}>
       {ok ? (
         <>
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/25 via-transparent to-transparent z-10" />
+          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/30 via-transparent to-transparent z-10" />
           <Image
             src={srcWithCacheBust}
             alt={alt}
             fill
-            className="object-cover object-center opacity-100 contrast-110 saturate-110 group-hover:contrast-125 group-hover:saturate-125 group-hover:scale-[1.02] transition duration-300"
+            className="object-cover object-top group-hover:scale-[1.02] transition duration-500"
             onError={() => setOk(false)}
             sizes={featured ? "(max-width: 640px) 90vw, 800px" : "(max-width: 640px) 90vw, 400px"}
             priority={featured}
-            quality={95}
+            quality={90}
             unoptimized={process.env.NODE_ENV === "development"}
           />
         </>
