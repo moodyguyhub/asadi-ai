@@ -129,12 +129,12 @@ export function AtlasWidget({ products }: { products: Product[] }) {
         <>
           {/* Backdrop for mobile */}
           <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
             onClick={() => setOpen(false)}
           />
           
-          <div className="fixed inset-4 md:inset-auto md:bottom-20 md:right-5 md:w-[400px] glass rounded-3xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 z-50 flex flex-col">
-            <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
+          <div className="fixed top-16 left-4 right-4 bottom-4 md:inset-auto md:top-auto md:left-auto md:bottom-20 md:right-5 md:w-[400px] glass rounded-3xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 z-50 flex flex-col">
+            <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-black/40">
               <div className="text-sm font-semibold tracking-tight flex items-center gap-2">
                 <span className="text-[rgb(var(--accent))]">●</span> Atlas
               </div>
