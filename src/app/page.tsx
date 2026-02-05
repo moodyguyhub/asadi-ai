@@ -31,16 +31,16 @@ export default function HomePage() {
           ))}
         </div>
 
-        <section id="work" className="mt-12 sm:mt-16">
+        <section id="work" className="mt-12 sm:mt-16 scroll-mt-24">
           <ProductsBento products={products} />
         </section>
-        <section id="about" className="mt-20 sm:mt-28">
+        <section id="about" className="mt-20 sm:mt-28 scroll-mt-24">
           <About />
         </section>
-        <section id="stack" className="mt-20 sm:mt-28">
+        <section id="stack" className="mt-20 sm:mt-28 scroll-mt-24">
           <Stack />
         </section>
-        <section id="contact" className="mt-20 sm:mt-28 pb-24 safe-bottom">
+        <section id="contact" className="mt-20 sm:mt-28 pb-24 safe-bottom scroll-mt-24">
           <Contact />
         </section>
       </div>
