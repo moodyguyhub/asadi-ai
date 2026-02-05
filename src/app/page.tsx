@@ -1,5 +1,6 @@
 import { site } from "@/content/site";
 import { products } from "@/content/products";
+import { heroMetrics } from "@/content/metrics";
 import { TopNav } from "@/components/top-nav";
 import { Hero } from "@/components/hero";
 import { ProductsBento } from "@/components/products-bento";
@@ -7,26 +8,22 @@ import { About } from "@/components/about";
 import { Stack } from "@/components/stack";
 import { Contact } from "@/components/contact";
 import { AtlasWidget } from "@/components/atlas/widget";
+import { JsonLd } from "@/components/json-ld";
 
 export default function HomePage() {
   return (
     <main className="min-h-screen">
+      <JsonLd />
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-10">
         <TopNav />
         <Hero />
 
         {/* Metrics strip - premium styling */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs tracking-wide">
-          {[
-            "6 shipped",
-            "avg 3–4 weeks",
-            "4 industries",
-            "multi-tenant by default",
-            "audit-ready",
-          ].map((metric, i) => (
+          {heroMetrics.map((metric, i) => (
             <span key={metric} className="flex items-center gap-4 text-white/45">
               {metric}
-              {i < 4 && <span className="text-white/15">•</span>}
+              {i < heroMetrics.length - 1 && <span className="text-white/15">•</span>}
             </span>
           ))}
         </div>

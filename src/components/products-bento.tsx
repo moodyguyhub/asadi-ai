@@ -30,6 +30,7 @@ function ProductCard({
       whileHover={{ y: -6, scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
+      aria-label={`${product.name} — ${product.oneLiner}`}
       className={cn(
         "glass glass-interactive rounded-3xl p-0 text-left overflow-hidden group cursor-pointer",
         "ring-1 ring-white/5 hover:ring-white/10",

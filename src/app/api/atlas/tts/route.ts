@@ -2,12 +2,38 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
+// Simple in-memory rate limiting (per-IP, resets on cold start)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT = 10; // requests per window (tighter than chat — TTS costs more)
+const RATE_WINDOW = 60 * 1000; // 1 minute
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const record = rateLimitMap.get(ip);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW });
+    return false;
+  }
+
+  if (record.count >= RATE_LIMIT) return true;
+  record.count++;
+  return false;
+}
+
 /**
  * Server-side TTS using OpenAI's audio API.
  * Returns an MP3 audio stream for the given text.
  * Uses a fixed voice ("nova") for consistent character.
  */
 export async function POST(req: Request) {
+  const forwarded = req.headers.get("x-forwarded-for");
+  const ip = forwarded?.split(",")[0]?.trim() || "unknown";
+
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many TTS requests. Please wait." }, { status: 429 });
+  }
+
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) {
     return NextResponse.json({ error: "TTS not configured" }, { status: 503 });

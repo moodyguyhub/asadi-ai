@@ -500,9 +500,10 @@ export function AtlasWidget() {
           <div 
             className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
             onClick={() => setOpen(false)}
+            aria-hidden="true"
           />
           
-          <div className="fixed top-16 left-4 right-4 bottom-4 md:relative md:top-auto md:left-auto md:right-auto md:bottom-auto md:w-[380px] overflow-hidden rounded-2xl border border-white/10 bg-[#0a0a0f]/95 backdrop-blur-xl shadow-2xl z-50 flex flex-col">
+          <div role="dialog" aria-label="Atlas AI Assistant" aria-modal="true" className="fixed top-16 left-4 right-4 bottom-4 md:relative md:top-auto md:left-auto md:right-auto md:bottom-auto md:w-[380px] overflow-hidden rounded-2xl border border-white/10 bg-[#0a0a0f]/95 backdrop-blur-xl shadow-2xl z-50 flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 bg-black/40">
               <div className="flex items-center gap-3">

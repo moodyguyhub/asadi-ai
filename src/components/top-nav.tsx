@@ -20,7 +20,7 @@ export function TopNav() {
         >
           {site.name}
         </Link>
-        <div className="flex items-center gap-4 sm:gap-8">
+        <div className="flex items-center gap-4 sm:gap-8" role="navigation" aria-label="Page sections">
           {links.map((l) => (
             <a
               key={l.href}

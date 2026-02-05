@@ -91,7 +91,7 @@ export const products: Product[] = [
       ],
       outcomes: ["A repeatable system to ship faster without losing control"],
       role: ["Architecture", "Orchestration design", "Platform build"],
-      links: [{ label: "Case Study", href: "/work/equira" }],
+      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
     },
   },
   {
@@ -115,7 +115,7 @@ export const products: Product[] = [
       ],
       outcomes: ["A faster path from data → hypothesis → review"],
       role: ["System design", "AI workflow engineering"],
-      links: [{ label: "Case Study", href: "/work/scanminers" }],
+      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
     },
   },
   {
@@ -136,7 +136,7 @@ export const products: Product[] = [
       ],
       outcomes: ["An academy factory designed for trust and compliance posture"],
       role: ["Architecture", "Platform implementation", "Governance"],
-      links: [{ label: "Case Study", href: "/work/finura" }],
+      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
     },
   },
   {
@@ -154,7 +154,7 @@ export const products: Product[] = [
       approach: ["Structured curriculum + guided practice loops"],
       outcomes: ["A gamified learning experience built around progression"],
       role: ["Product build", "Full-stack"],
-      links: [{ label: "Case Study", href: "/work/chessio" }],
+      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
     },
   },
 ];

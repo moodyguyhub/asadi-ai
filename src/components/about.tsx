@@ -1,13 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-
-const pillars = [
-  { title: "Speed", desc: "6 products shipped across 4 industries.", icon: "⚡" },
-  { title: "Method", desc: "Multi-agent orchestration with structured handoffs.", icon: "🔗" },
-  { title: "Domain", desc: "Brokerage systems, CRMs, dealing desks, MT4/MT5 ecosystems.", icon: "📊" },
-  { title: "Approach", desc: "Evidence-first, audit-ready delivery.", icon: "✓" },
-];
+import { aboutPillars } from "@/content/about";
 
 export function About() {
   return (
@@ -26,7 +20,7 @@ export function About() {
       </p>
 
       <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {pillars.map((p, i) => (
+        {aboutPillars.map((p, i) => (
           <motion.div
             key={p.title}
             initial={{ opacity: 0, y: 10 }}

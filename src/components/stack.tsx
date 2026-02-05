@@ -2,14 +2,9 @@
 
 import { Badge } from "@/components/catalyst/badge";
 import { motion } from "framer-motion";
+import { stackGroups } from "@/content/stack";
 
 export function Stack() {
-  const groups = [
-    { title: "Frontend", icon: "🎨", items: ["Next.js", "TypeScript", "Tailwind", "Framer Motion"] },
-    { title: "Backend", icon: "⚙️", items: ["Node.js", "PostgreSQL", "Prisma", "REST/Realtime patterns"] },
-    { title: "AI", icon: "🤖", items: ["Agent workflows", "RAG patterns", "Eval/trace discipline"] },
-    { title: "Infra", icon: "🔒", items: ["CI gates", "Audit trails", "Security-first defaults"] },
-  ];
 
   return (
     <motion.section 
@@ -25,7 +20,7 @@ export function Stack() {
       </p>
 
       <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {groups.map((g, index) => (
+        {stackGroups.map((g, index) => (
           <motion.div 
             key={g.title} 
             initial={{ opacity: 0, y: 20 }}

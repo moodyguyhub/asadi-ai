@@ -39,7 +39,7 @@ export function ProductScreenshot({
             onError={() => setOk(false)}
             sizes={featured ? "(max-width: 640px) 90vw, 800px" : "(max-width: 640px) 90vw, 400px"}
             priority={featured}
-            quality={95}
+            quality={85}
             unoptimized={process.env.NODE_ENV === "development"}
           />
         </>
