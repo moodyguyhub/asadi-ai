@@ -126,64 +126,72 @@ export function AtlasWidget({ products }: { products: Product[] }) {
       </button>
 
       {open ? (
-        <div className="fixed bottom-20 right-5 w-[92vw] max-w-md glass rounded-3xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 z-50">
-          <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
-            <div className="text-sm font-semibold tracking-tight flex items-center gap-2">
-              <span className="text-[rgb(var(--accent))]">●</span> Atlas
+        <>
+          {/* Backdrop for mobile */}
+          <div 
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+            onClick={() => setOpen(false)}
+          />
+          
+          <div className="fixed inset-4 md:inset-auto md:bottom-20 md:right-5 md:w-[400px] glass rounded-3xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 z-50 flex flex-col">
+            <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
+              <div className="text-sm font-semibold tracking-tight flex items-center gap-2">
+                <span className="text-[rgb(var(--accent))]">●</span> Atlas
+              </div>
+              <button className="text-xs text-zinc-400 hover:text-white transition-colors font-medium" onClick={() => setOpen(false)}>
+                Close
+              </button>
             </div>
-            <button className="text-xs text-zinc-400 hover:text-white transition-colors font-medium" onClick={() => setOpen(false)}>
-              Close
-            </button>
-          </div>
 
-          <div className="max-h-[55vh] overflow-auto px-5 py-4 space-y-4">
-            <div className="flex flex-wrap gap-2">
-              {chips.map((c) => (
-                <button
-                  key={c}
-                  onClick={() => send(c)}
-                  className="text-[11px] px-3 py-1.5 rounded-full premium-pill hover:-translate-y-0.5 transition-all font-medium tracking-wide"
-                >
-                  {c}
-                </button>
+            <div className="flex-1 overflow-auto px-5 py-4 space-y-4 max-h-[70vh] md:max-h-[55vh]">
+              <div className="flex flex-wrap gap-2">
+                {chips.map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => send(c)}
+                    className="text-[11px] px-3 py-1.5 rounded-full premium-pill hover:-translate-y-0.5 transition-all font-medium tracking-wide"
+                  >
+                    {c}
+                  </button>
+                ))}
+              </div>
+
+              {msgs.map((m, idx) => (
+                <div key={idx} className={cn("rounded-2xl p-4", m.role === "user" ? "bg-white/5 ml-4 md:ml-8 border border-white/5" : "premium-pill mr-4 md:mr-8")}>
+                  <div className="text-[11px] font-semibold tracking-wide text-zinc-400">{m.role === "user" ? "You" : "Atlas"}</div>
+                  <pre className="mt-2 whitespace-pre-wrap text-sm text-zinc-300 leading-relaxed">{m.text}</pre>
+                  {m.sources?.length ? (
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      {m.sources.map((s) => (
+                        <a key={s.href} href={s.href} className="text-[11px] font-medium text-[rgb(var(--accent))] hover:underline underline-offset-2 transition-all">
+                          {s.label} →
+                        </a>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
               ))}
             </div>
 
-            {msgs.map((m, idx) => (
-              <div key={idx} className={cn("rounded-2xl p-4", m.role === "user" ? "bg-white/5 ml-8 border border-white/5" : "premium-pill mr-8")}>
-                <div className="text-[11px] font-semibold tracking-wide text-zinc-400">{m.role === "user" ? "You" : "Atlas"}</div>
-                <pre className="mt-2 whitespace-pre-wrap text-sm text-zinc-300 leading-relaxed">{m.text}</pre>
-                {m.sources?.length ? (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {m.sources.map((s) => (
-                      <a key={s.href} href={s.href} className="text-[11px] font-medium text-[rgb(var(--accent))] hover:underline underline-offset-2 transition-all">
-                        {s.label} →
-                      </a>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            ))}
+            <form
+              className="p-4 border-t border-white/10 flex gap-3 bg-white/[0.02]"
+              onSubmit={(e) => {
+                e.preventDefault();
+                send(input);
+              }}
+            >
+              <input
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about products, stack, availability…"
+                className="flex-1 premium-pill rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]/30 transition-all placeholder:text-zinc-500"
+              />
+              <button className="bg-[rgb(var(--accent))] hover:bg-[rgb(var(--accent))]/90 text-black rounded-xl px-5 py-3 text-sm font-semibold tracking-tight shadow-lg shadow-[rgba(var(--accent),0.25)] transition-all hover:-translate-y-0.5">
+                Send
+              </button>
+            </form>
           </div>
-
-          <form
-            className="p-4 border-t border-white/10 flex gap-3 bg-white/[0.02]"
-            onSubmit={(e) => {
-              e.preventDefault();
-              send(input);
-            }}
-          >
-            <input
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about products, stack, availability…"
-              className="flex-1 premium-pill rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]/30 transition-all placeholder:text-zinc-500"
-            />
-            <button className="bg-[rgb(var(--accent))] hover:bg-[rgb(var(--accent))]/90 text-black rounded-xl px-5 py-3 text-sm font-semibold tracking-tight shadow-lg shadow-[rgba(var(--accent),0.25)] transition-all hover:-translate-y-0.5">
-              Send
-            </button>
-          </form>
-        </div>
+        </>
       ) : null}
     </>
   );
