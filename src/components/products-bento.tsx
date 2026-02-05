@@ -159,7 +159,7 @@ export function ProductsBento({ products }: { products: Product[] }) {
         {products.map((p, index) => {
           const spanFor = (pId: string) => {
             if (pId === "truvesta") return "md:col-span-4";
-            if (pId === "chessio") return "md:col-span-3";
+            if (pId === "chessio") return "md:col-span-4 md:col-start-2";
             return "md:col-span-2";
           };
 
