@@ -58,6 +58,8 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
   const [status, setStatus] = useState<"idle" | "listening" | "processing" | "speaking">("idle");
   const [transcript, setTranscript] = useState("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const preferredVoiceRef = useRef<SpeechSynthesisVoice | null>(null);
+  const voicesChangedHandlerRef = useRef<((this: SpeechSynthesis, ev: Event) => any) | null>(null);
   const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastHeardTextRef = useRef<string>("");
   const hasPendingSendRef = useRef(false);
@@ -150,6 +152,53 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
 
     recognitionRef.current = recognition;
 
+    // Preload voices and lock a stable English voice.
+    const pickEnglishVoice = (voices: SpeechSynthesisVoice[]) => {
+      const score = (v: SpeechSynthesisVoice) => {
+        const name = (v.name || "").toLowerCase();
+        const lang = (v.lang || "").toLowerCase();
+        let s = 0;
+
+        // Hard avoid German voices.
+        if (lang.startsWith("de") || name.includes("german") || name.includes("deutsch")) return -999;
+
+        // Prefer English locales.
+        if (lang === "en-us") s += 100;
+        else if (lang.startsWith("en-")) s += 80;
+        else if (lang.startsWith("en")) s += 70;
+
+        // Prefer high-quality/system voices.
+        if (name.includes("google")) s += 25;
+        if (name.includes("natural")) s += 20;
+        if (name.includes("enhanced")) s += 15;
+        if (name.includes("samantha")) s += 10;
+        if (name.includes("alex")) s += 8;
+
+        // Prefer default among English voices.
+        if (v.default) s += 5;
+        return s;
+      };
+
+      const sorted = [...voices].sort((a, b) => score(b) - score(a));
+      const best = sorted[0] || null;
+      preferredVoiceRef.current = best;
+    };
+
+    if (isSynthesisSupported()) {
+      const initialVoices = window.speechSynthesis.getVoices();
+      if (initialVoices.length) {
+        pickEnglishVoice(initialVoices);
+      } else {
+        const onVoicesChanged = () => {
+          const vs = window.speechSynthesis.getVoices();
+          if (vs.length) pickEnglishVoice(vs);
+        };
+        voicesChangedHandlerRef.current = onVoicesChanged;
+        window.speechSynthesis.addEventListener("voiceschanged", onVoicesChanged);
+        // Cleanup handled below
+      }
+    }
+
     // Speak intro
     speakText("I'm Atlas, Mahmood's Chief of AI Staff. Portfolio scope only. How can I help?");
 
@@ -157,6 +206,10 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
       clearSilenceTimer();
       recognition.abort();
       window.speechSynthesis?.cancel();
+
+      if (isSynthesisSupported() && voicesChangedHandlerRef.current) {
+        window.speechSynthesis.removeEventListener("voiceschanged", voicesChangedHandlerRef.current);
+      }
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -174,15 +227,25 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
 
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
-    
-    // Try to get a natural voice
-    const voices = window.speechSynthesis.getVoices();
-    const preferredVoice = voices.find(v => 
-      v.name.includes("Google") || v.name.includes("Natural") || v.name.includes("Samantha")
-    ) || voices.find(v => v.lang.startsWith("en"));
-    if (preferredVoice) utterance.voice = preferredVoice;
+
+    // Lock to a stable English voice to avoid mixed-language output.
+    const lockedVoice = preferredVoiceRef.current;
+    if (lockedVoice) {
+      utterance.voice = lockedVoice;
+    } else {
+      // Fallback: pick an English voice now (voices list can become available later).
+      const voices = window.speechSynthesis.getVoices();
+      const english = voices.find((v) => (v.lang || "").toLowerCase() === "en-us")
+        || voices.find((v) => (v.lang || "").toLowerCase().startsWith("en-"))
+        || voices.find((v) => (v.lang || "").toLowerCase().startsWith("en"));
+      if (english) {
+        preferredVoiceRef.current = english;
+        utterance.voice = english;
+      }
+    }
 
     utterance.onstart = () => {
       setIsSpeaking(true);
