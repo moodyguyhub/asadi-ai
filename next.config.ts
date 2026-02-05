@@ -1,7 +1,18 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    qualities: [75, 90, 95],
+  },
+  async redirects() {
+    return [
+      {
+        source: "/cv",
+        destination: "/cv.pdf",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
