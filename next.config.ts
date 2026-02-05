@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Permissions-Policy",
-            value: "microphone=(self)",
+            value: "microphone=*",
           },
         ],
       },
