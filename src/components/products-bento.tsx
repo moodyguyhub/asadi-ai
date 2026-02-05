@@ -13,60 +13,62 @@ import { ProductScreenshot } from "@/components/product-screenshot";
 function ProductCard({ 
   product, 
   onClick,
-  size = "normal",
+  colSpan,
   index
 }: { 
   product: Product; 
   onClick: () => void;
-  size?: "featured" | "normal";
+  colSpan: string;
   index: number;
 }) {
-  const isFeatured = size === "featured";
-  
   return (
     <motion.button
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay: index * 0.08, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -4, scale: 1.005 }}
-      whileTap={{ scale: 0.99 }}
+      whileHover={{ y: -6, scale: 1.01 }}
+      whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={cn(
-        "glass glass-interactive rounded-2xl p-0 text-left overflow-hidden group cursor-pointer",
-        "ring-1 ring-white/5 hover:ring-white/15 transition-all",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]"
+        "glass glass-interactive rounded-3xl p-0 text-left overflow-hidden group cursor-pointer",
+        "ring-1 ring-white/5 hover:ring-white/10",
+        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--background))]",
+        colSpan
       )}
     >
-      {/* Screenshot */}
+      {/* Screenshot on top with built-time badge */}
       <div className="relative">
         <ProductScreenshot
           src={product.screenshot.src}
           alt={product.screenshot.alt}
           hint={`public${product.screenshot.src}`}
-          featured={isFeatured}
+          featured={product.featured || product.id === "chessio"}
         />
-        <div className="absolute bottom-3 right-3 text-[11px] px-3 py-1.5 rounded-full bg-black/80 backdrop-blur-md border border-white/10 z-20 font-medium">
+        <div className="absolute bottom-3 right-3 text-[11px] px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/10 z-20 font-medium tracking-wide">
           <span className="text-[rgb(var(--accent))]">Built in</span>{" "}
-          <span className="text-white">{product.builtIn}</span>
+          <span className="text-white/90">{product.builtIn}</span>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-4">
-        <div className="flex items-center gap-2 mb-2">
-          <Badge color="zinc" className="text-[10px]">{product.industry}</Badge>
-          {product.featured && <Badge color="cyan" className="text-[10px]">Featured</Badge>}
+      {/* Content below */}
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <Badge color="zinc" className="text-xs">{product.industry}</Badge>
+            <div className="mt-3 flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-white tracking-tight">{product.name}</h3>
+              {product.featured && (
+                <Badge color="cyan">Featured</Badge>
+              )}
+            </div>
+            <p className="mt-2 text-sm text-zinc-400 leading-relaxed">{product.oneLiner}</p>
+          </div>
         </div>
-        
-        <h3 className="text-base font-semibold text-white tracking-tight">{product.name}</h3>
-        <p className="mt-1.5 text-sm text-zinc-400 leading-relaxed line-clamp-2">{product.oneLiner}</p>
 
-        <div className="mt-3 flex flex-wrap gap-1.5">
+        <div className="mt-4 flex flex-wrap gap-2">
           {product.stack.slice(0, 4).map((t) => (
-            <span key={t} className="text-[10px] px-2 py-0.5 rounded-md bg-white/5 text-zinc-400 border border-white/5">
-              {t}
-            </span>
+            <Badge key={t} color="zinc">{t}</Badge>
           ))}
         </div>
       </div>
@@ -136,10 +138,6 @@ function ProductDialog({ product, open, onClose }: { product: Product | null; op
 export function ProductsBento({ products }: { products: Product[] }) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Separate featured (Truvesta) from others
-  const featured = products.find(p => p.featured);
-  const others = products.filter(p => !p.featured);
-
   return (
     <section>
       <motion.div 
@@ -157,42 +155,24 @@ export function ProductsBento({ products }: { products: Product[] }) {
         </div>
       </motion.div>
 
-      {/* Featured product - full width on mobile, 2/3 on desktop */}
-      {featured && (
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div className="lg:col-span-2">
-            <ProductCard
-              product={featured}
-              size="featured"
-              index={0}
-              onClick={() => setSelectedProduct(featured)}
-            />
-          </div>
-          {/* First regular product next to featured */}
-          {others[0] && (
-            <div className="lg:col-span-1">
-              <ProductCard
-                product={others[0]}
-                size="normal"
-                index={1}
-                onClick={() => setSelectedProduct(others[0])}
-              />
-            </div>
-          )}
-        </div>
-      )}
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-6 gap-4">
+        {products.map((p, index) => {
+          const spanFor = (pId: string) => {
+            if (pId === "truvesta") return "md:col-span-4";
+            if (pId === "chessio") return "md:col-span-3";
+            return "md:col-span-2";
+          };
 
-      {/* Remaining products in 3-column grid */}
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {others.slice(1).map((p, index) => (
-          <ProductCard
-            key={p.id}
-            product={p}
-            size="normal"
-            index={index + 2}
-            onClick={() => setSelectedProduct(p)}
-          />
-        ))}
+          return (
+            <ProductCard
+              key={p.id}
+              product={p}
+              colSpan={spanFor(p.id)}
+              index={index}
+              onClick={() => setSelectedProduct(p)}
+            />
+          );
+        })}
       </div>
 
       <ProductDialog
