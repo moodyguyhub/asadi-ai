@@ -1,13 +1,22 @@
 "use client";
 
-import { useEffect, useMemo, useState, useRef, useCallback } from "react";
-import { site } from "@/content/site";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
+import { trackEvent } from "@/lib/analytics";
 
-type Msg = { role: "user" | "atlas"; text: string; isTyping?: boolean };
+type Msg = { role: "user" | "assistant"; text: string; isTyping?: boolean };
+
+const SUGGESTED_CHIPS = [
+  "How did Mahmood ship Ardura and Truvesta in 3 weeks?",
+  "What does Truvesta solve for Forex/CFD brokers?",
+  "What's Mahmood's tech stack and domain depth?",
+  "Is Mahmood available, and what roles is he targeting?",
+];
+
+const OPENING_MESSAGE = "I'm Atlas — Mahmood's Chief of AI Staff (Portfolio). I operate strictly from the public knowledge pack (CV, products, stack). Ask about builds, orchestration method, roles, or availability.";
 
 // Typewriter effect component
-function TypewriterText({ text, onComplete, speed = 12 }: { text: string; onComplete?: () => void; speed?: number }) {
+function TypewriterText({ text, onComplete, speed = 10 }: { text: string; onComplete?: () => void; speed?: number }) {
   const [displayedText, setDisplayedText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -26,7 +35,7 @@ function TypewriterText({ text, onComplete, speed = 12 }: { text: string; onComp
   return (
     <>
       {displayedText}
-      {currentIndex < text.length && <span className="animate-pulse text-[rgb(var(--accent))]">▊</span>}
+      {currentIndex < text.length && <span className="animate-pulse text-emerald-400">▊</span>}
     </>
   );
 }
@@ -35,13 +44,11 @@ export function AtlasWidget() {
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [msgs, setMsgs] = useState<Msg[]>([
-    { role: "atlas", text: site.atlas.opening },
+    { role: "assistant", text: OPENING_MESSAGE },
   ]);
   const [isTyping, setIsTyping] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  const chips = useMemo(() => site.atlas.chips, []);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   // Listen for external trigger (e.g., from hero "Ask Atlas" button)
   useEffect(() => {
@@ -49,6 +56,23 @@ export function AtlasWidget() {
     window.addEventListener("atlas:open", handleOpen);
     return () => window.removeEventListener("atlas:open", handleOpen);
   }, []);
+
+  // Escape to close
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  // Focus input when opened
+  useEffect(() => {
+    if (open) {
+      trackEvent("atlas_opened", { source: "widget" });
+      setTimeout(() => inputRef.current?.focus(), 50);
+    }
+  }, [open]);
 
   // Auto-scroll when new messages arrive
   useEffect(() => {
@@ -61,7 +85,6 @@ export function AtlasWidget() {
     const trimmed = text.trim();
     if (!trimmed || isTyping) return;
     
-    setError(null);
     const userMsg: Msg = { role: "user", text: trimmed };
     setMsgs((m) => [...m, userMsg]);
     setInput("");
@@ -75,20 +98,22 @@ export function AtlasWidget() {
       });
 
       const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
-      }
+      const responseText = (data?.text || "").toString().trim();
 
       const atlasMsg: Msg = { 
-        role: "atlas", 
-        text: data.text,
+        role: "assistant", 
+        text: responseText || "That's outside my portfolio scope—please book a call for deeper discussion.",
         isTyping: true 
       };
       setMsgs((m) => [...m, atlasMsg]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Atlas is temporarily unavailable");
-      setIsTyping(false);
+    } catch {
+      setMsgs((m) => [...m, { 
+        role: "assistant", 
+        text: "Atlas is temporarily unavailable. Please use the booking link to connect.",
+        isTyping: true 
+      }]);
+    } finally {
+      setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [isTyping]);
 
@@ -98,20 +123,25 @@ export function AtlasWidget() {
   }, []);
 
   return (
-    <>
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-5 right-5 glass glass-interactive rounded-2xl px-5 py-3.5 text-sm flex items-center gap-2.5 shadow-lg shadow-black/20 z-50 pb-safe"
-        aria-label="Open Atlas"
-      >
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[rgb(var(--accent))] opacity-60"></span>
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[rgb(var(--accent))]"></span>
-        </span>
-        <span className="font-semibold tracking-tight">Ask Atlas</span>
-      </button>
-
-      {open ? (
+    <div className="fixed bottom-4 right-4 z-50">
+      {!open ? (
+        <button
+          onClick={() => setOpen(true)}
+          className="group flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 backdrop-blur-md hover:bg-white/10 transition shadow-lg shadow-black/20"
+          aria-label="Open Atlas"
+        >
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/60" />
+            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+          </span>
+          <div className="text-left leading-tight">
+            <div className="text-sm font-semibold text-white">Ask Atlas</div>
+            <div className="text-[10px] font-medium uppercase tracking-wider text-white/50">
+              Chief of AI Staff
+            </div>
+          </div>
+        </button>
+      ) : (
         <>
           {/* Backdrop for mobile */}
           <div 
@@ -119,41 +149,49 @@ export function AtlasWidget() {
             onClick={() => setOpen(false)}
           />
           
-          <div className="fixed top-16 left-4 right-4 bottom-4 md:inset-auto md:top-auto md:left-auto md:bottom-20 md:right-5 md:w-[400px] glass rounded-3xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 z-50 flex flex-col">
-            <div className="px-5 py-4 border-b border-white/10 flex items-center justify-between bg-black/40">
-              <div className="text-sm font-semibold tracking-tight flex items-center gap-2">
-                <span className="text-[rgb(var(--accent))]">●</span> Atlas
+          <div className="fixed top-16 left-4 right-4 bottom-4 md:relative md:top-auto md:left-auto md:right-auto md:bottom-auto md:w-[380px] overflow-hidden rounded-2xl border border-white/10 bg-[#0a0a0f]/95 backdrop-blur-xl shadow-2xl z-50 flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-white/10 px-4 py-3 bg-black/40">
+              <div className="flex items-center gap-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-full border border-emerald-400/25 bg-emerald-400/10">
+                  <span className="text-xs font-bold text-emerald-300">A</span>
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-white">Atlas</div>
+                  <div className="text-[10px] font-medium uppercase tracking-wide text-white/50">
+                    Chief of AI Staff • KB-bound
+                  </div>
+                </div>
               </div>
-              <button className="text-xs text-zinc-400 hover:text-white transition-colors font-medium" onClick={() => setOpen(false)}>
-                Close
+              <button
+                onClick={() => setOpen(false)}
+                className="rounded-lg px-2 py-1 text-white/60 hover:text-white hover:bg-white/10 transition text-lg"
+                aria-label="Close"
+              >
+                ×
               </button>
             </div>
 
-            <div ref={scrollRef} className="flex-1 overflow-auto px-5 py-4 space-y-4 max-h-[70vh] md:max-h-[55vh]">
-              <div className="flex flex-wrap gap-2">
-                {chips.map((c) => (
-                  <button
-                    key={c}
-                    onClick={() => send(c)}
-                    disabled={isTyping}
-                    className={cn(
-                      "text-[11px] px-3 py-1.5 rounded-full premium-pill hover:-translate-y-0.5 transition-all font-medium tracking-wide",
-                      isTyping && "opacity-50 cursor-not-allowed"
-                    )}
-                  >
-                    {c}
-                  </button>
-                ))}
-              </div>
-
+            {/* Messages */}
+            <div
+              ref={scrollRef}
+              className="flex-1 overflow-auto px-4 py-4 space-y-3 max-h-[70vh] md:max-h-[420px]"
+            >
               {msgs.map((m, idx) => (
-                <div key={idx} className={cn("rounded-2xl p-4", m.role === "user" ? "bg-white/5 ml-4 md:ml-8 border border-white/5" : "premium-pill mr-4 md:mr-8")}>
-                  <div className="text-[11px] font-semibold tracking-wide text-zinc-400">{m.role === "user" ? "You" : "Atlas"}</div>
-                  <pre className="mt-2 whitespace-pre-wrap text-sm text-zinc-300 leading-relaxed font-sans">
-                    {m.role === "atlas" && m.isTyping ? (
+                <div
+                  key={idx}
+                  className={cn(
+                    "rounded-xl px-4 py-3 text-sm",
+                    m.role === "assistant"
+                      ? "bg-white/5 text-white/90 border border-white/10 mr-4"
+                      : "bg-emerald-400/10 text-white border border-emerald-400/20 ml-6"
+                  )}
+                >
+                  <pre className="whitespace-pre-wrap font-sans leading-relaxed">
+                    {m.role === "assistant" && m.isTyping ? (
                       <TypewriterText 
                         text={m.text} 
-                        speed={10} 
+                        speed={8} 
                         onComplete={() => handleTypingComplete(idx)} 
                       />
                     ) : (
@@ -163,55 +201,72 @@ export function AtlasWidget() {
                 </div>
               ))}
 
-              {error && (
-                <div className="bg-red-500/10 border border-red-500/20 rounded-2xl p-4 mr-4 md:mr-8">
-                  <div className="text-[11px] font-semibold tracking-wide text-red-400">Error</div>
-                  <p className="mt-2 text-sm text-red-300">{error}</p>
+              {/* Chips - only show at start */}
+              {msgs.length <= 1 && (
+                <div className="flex flex-wrap gap-2 pt-2">
+                  {SUGGESTED_CHIPS.map((q) => (
+                    <button
+                      key={q}
+                      onClick={() => send(q)}
+                      disabled={isTyping}
+                      className={cn(
+                        "rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-[11px] text-white/80 hover:bg-white/10 transition",
+                        isTyping && "opacity-50 cursor-not-allowed"
+                      )}
+                    >
+                      {q}
+                    </button>
+                  ))}
                 </div>
               )}
 
               {isTyping && msgs[msgs.length - 1]?.role === "user" && (
-                <div className="premium-pill mr-4 md:mr-8 rounded-2xl p-4">
-                  <div className="text-[11px] font-semibold tracking-wide text-zinc-400">Atlas</div>
-                  <div className="mt-2 flex items-center gap-1">
-                    <span className="w-2 h-2 bg-[rgb(var(--accent))] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-                    <span className="w-2 h-2 bg-[rgb(var(--accent))] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-                    <span className="w-2 h-2 bg-[rgb(var(--accent))] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                <div className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 mr-4">
+                  <div className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                    <span className="text-xs text-white/40 ml-2">Atlas processing…</span>
                   </div>
                 </div>
               )}
             </div>
 
-            <form
-              className="p-4 border-t border-white/10 flex gap-3 bg-white/[0.02]"
-              onSubmit={(e) => {
-                e.preventDefault();
-                send(input);
-              }}
-            >
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                disabled={isTyping}
-                placeholder={isTyping ? "Atlas is typing…" : "Ask about products, stack, availability…"}
-                className={cn(
-                  "flex-1 premium-pill rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]/30 transition-all placeholder:text-zinc-500",
-                  isTyping && "opacity-50 cursor-not-allowed"
-                )}
-              />
-              <button 
-                disabled={isTyping}
-                className={cn(
-                  "bg-[rgb(var(--accent))] hover:bg-[rgb(var(--accent))]/90 text-black rounded-xl px-5 py-3 text-sm font-semibold tracking-tight shadow-lg shadow-[rgba(var(--accent),0.25)] transition-all hover:-translate-y-0.5",
-                  isTyping && "opacity-50 cursor-not-allowed"
-                )}
+            {/* Input */}
+            <div className="border-t border-white/10 p-3 bg-black/20">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  send(input);
+                }}
+                className="flex items-center gap-2"
               >
-                Send
-              </button>
-            </form>
+                <input
+                  ref={inputRef}
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  disabled={isTyping}
+                  placeholder="Ask about products, stack, roles, availability…"
+                  className={cn(
+                    "w-full rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/40 outline-none focus:border-emerald-400/40 transition",
+                    isTyping && "opacity-50"
+                  )}
+                />
+                <button
+                  type="submit"
+                  disabled={isTyping}
+                  className={cn(
+                    "rounded-xl bg-emerald-400/20 px-4 py-2.5 text-sm font-semibold text-emerald-200 hover:bg-emerald-400/30 transition",
+                    isTyping && "opacity-50 cursor-not-allowed"
+                  )}
+                >
+                  Send
+                </button>
+              </form>
+            </div>
           </div>
         </>
-      ) : null}
-    </>
+      )}
+    </div>
   );
 }
