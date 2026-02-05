@@ -4,6 +4,19 @@ const nextConfig: NextConfig = {
   images: {
     qualities: [75, 90, 95],
   },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Permissions-Policy",
+            value: "microphone=(self)",
+          },
+        ],
+      },
+    ];
+  },
   async redirects() {
     return [
       {
