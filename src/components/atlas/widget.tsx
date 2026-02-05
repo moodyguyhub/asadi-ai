@@ -1,11 +1,36 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import { Product } from "@/content/products";
 import { site } from "@/content/site";
 import { cn } from "@/lib/utils";
 
-type Msg = { role: "user" | "atlas"; text: string; sources?: { label: string; href: string }[] };
+type Msg = { role: "user" | "atlas"; text: string; sources?: { label: string; href: string }[]; isTyping?: boolean };
+
+// Typewriter effect component
+function TypewriterText({ text, onComplete, speed = 15 }: { text: string; onComplete?: () => void; speed?: number }) {
+  const [displayedText, setDisplayedText] = useState("");
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(text.slice(0, currentIndex + 1));
+        setCurrentIndex(currentIndex + 1);
+      }, speed);
+      return () => clearTimeout(timeout);
+    } else if (onComplete) {
+      onComplete();
+    }
+  }, [currentIndex, text, speed, onComplete]);
+
+  return (
+    <>
+      {displayedText}
+      {currentIndex < text.length && <span className="animate-pulse text-[rgb(var(--accent))]">▊</span>}
+    </>
+  );
+}
 
 function answerFromSite(question: string, products: Product[]): Msg {
   const q = question.toLowerCase();
@@ -102,13 +127,36 @@ export function AtlasWidget({ products }: { products: Product[] }) {
     return () => window.removeEventListener("atlas:open", handleOpen);
   }, []);
 
+  const [isTyping, setIsTyping] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll when new messages arrive
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [msgs, isTyping]);
+
   function send(text: string) {
     const trimmed = text.trim();
-    if (!trimmed) return;
+    if (!trimmed || isTyping) return;
+    
     const userMsg: Msg = { role: "user", text: trimmed };
-    const atlasMsg = answerFromSite(trimmed, products);
-    setMsgs((m) => [...m, userMsg, atlasMsg]);
+    setMsgs((m) => [...m, userMsg]);
     setInput("");
+    setIsTyping(true);
+
+    // Simulate brief "thinking" delay
+    setTimeout(() => {
+      const atlasMsg = answerFromSite(trimmed, products);
+      atlasMsg.isTyping = true;
+      setMsgs((m) => [...m, atlasMsg]);
+    }, 400);
+  }
+
+  function handleTypingComplete(idx: number) {
+    setMsgs((m) => m.map((msg, i) => i === idx ? { ...msg, isTyping: false } : msg));
+    setIsTyping(false);
   }
 
   return (
@@ -143,13 +191,17 @@ export function AtlasWidget({ products }: { products: Product[] }) {
               </button>
             </div>
 
-            <div className="flex-1 overflow-auto px-5 py-4 space-y-4 max-h-[70vh] md:max-h-[55vh]">
+            <div ref={scrollRef} className="flex-1 overflow-auto px-5 py-4 space-y-4 max-h-[70vh] md:max-h-[55vh]">
               <div className="flex flex-wrap gap-2">
                 {chips.map((c) => (
                   <button
                     key={c}
                     onClick={() => send(c)}
-                    className="text-[11px] px-3 py-1.5 rounded-full premium-pill hover:-translate-y-0.5 transition-all font-medium tracking-wide"
+                    disabled={isTyping}
+                    className={cn(
+                      "text-[11px] px-3 py-1.5 rounded-full premium-pill hover:-translate-y-0.5 transition-all font-medium tracking-wide",
+                      isTyping && "opacity-50 cursor-not-allowed"
+                    )}
                   >
                     {c}
                   </button>
@@ -159,8 +211,18 @@ export function AtlasWidget({ products }: { products: Product[] }) {
               {msgs.map((m, idx) => (
                 <div key={idx} className={cn("rounded-2xl p-4", m.role === "user" ? "bg-white/5 ml-4 md:ml-8 border border-white/5" : "premium-pill mr-4 md:mr-8")}>
                   <div className="text-[11px] font-semibold tracking-wide text-zinc-400">{m.role === "user" ? "You" : "Atlas"}</div>
-                  <pre className="mt-2 whitespace-pre-wrap text-sm text-zinc-300 leading-relaxed">{m.text}</pre>
-                  {m.sources?.length ? (
+                  <pre className="mt-2 whitespace-pre-wrap text-sm text-zinc-300 leading-relaxed">
+                    {m.role === "atlas" && m.isTyping ? (
+                      <TypewriterText 
+                        text={m.text} 
+                        speed={12} 
+                        onComplete={() => handleTypingComplete(idx)} 
+                      />
+                    ) : (
+                      m.text
+                    )}
+                  </pre>
+                  {m.sources?.length && !m.isTyping ? (
                     <div className="mt-3 flex flex-wrap gap-2">
                       {m.sources.map((s) => (
                         <a key={s.href} href={s.href} className="text-[11px] font-medium text-[rgb(var(--accent))] hover:underline underline-offset-2 transition-all">
@@ -171,6 +233,17 @@ export function AtlasWidget({ products }: { products: Product[] }) {
                   ) : null}
                 </div>
               ))}
+
+              {isTyping && msgs[msgs.length - 1]?.role === "user" && (
+                <div className="premium-pill mr-4 md:mr-8 rounded-2xl p-4">
+                  <div className="text-[11px] font-semibold tracking-wide text-zinc-400">Atlas</div>
+                  <div className="mt-2 flex items-center gap-1">
+                    <span className="w-2 h-2 bg-[rgb(var(--accent))] rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-2 h-2 bg-[rgb(var(--accent))] rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-2 h-2 bg-[rgb(var(--accent))] rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </div>
+                </div>
+              )}
             </div>
 
             <form
@@ -183,10 +256,20 @@ export function AtlasWidget({ products }: { products: Product[] }) {
               <input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about products, stack, availability…"
-                className="flex-1 premium-pill rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]/30 transition-all placeholder:text-zinc-500"
+                disabled={isTyping}
+                placeholder={isTyping ? "Atlas is typing…" : "Ask about products, stack, availability…"}
+                className={cn(
+                  "flex-1 premium-pill rounded-xl px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[rgb(var(--accent))]/30 transition-all placeholder:text-zinc-500",
+                  isTyping && "opacity-50 cursor-not-allowed"
+                )}
               />
-              <button className="bg-[rgb(var(--accent))] hover:bg-[rgb(var(--accent))]/90 text-black rounded-xl px-5 py-3 text-sm font-semibold tracking-tight shadow-lg shadow-[rgba(var(--accent),0.25)] transition-all hover:-translate-y-0.5">
+              <button 
+                disabled={isTyping}
+                className={cn(
+                  "bg-[rgb(var(--accent))] hover:bg-[rgb(var(--accent))]/90 text-black rounded-xl px-5 py-3 text-sm font-semibold tracking-tight shadow-lg shadow-[rgba(var(--accent),0.25)] transition-all hover:-translate-y-0.5",
+                  isTyping && "opacity-50 cursor-not-allowed"
+                )}
+              >
                 Send
               </button>
             </form>
