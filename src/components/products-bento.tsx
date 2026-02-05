@@ -45,7 +45,7 @@ function ProductCard({
           hint={`public${product.screenshot.src}`}
           featured={product.featured || product.id === "chessio"}
         />
-        <div className="absolute bottom-3 right-3 text-[11px] px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/10 z-20 font-medium tracking-wide">
+        <div className="absolute bottom-3 right-3 text-[11px] px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/10 font-medium tracking-wide">
           <span className="text-[rgb(var(--accent))]">Built in</span>{" "}
           <span className="text-white/90">{product.builtIn}</span>
         </div>
