@@ -9,11 +9,11 @@ export const site = {
     href: "https://cal.com/ctoalpha/deep-dive",
     hint: "30 min — walkthrough + Q&A (Recommended)" 
   },
-  // Secondary CTA: 15-min Quick Chat
+  // Secondary CTA: 15-min Intro
   ctaQuickChat: { 
-    label: "Quick Chat", 
+    label: "15-min Intro", 
     href: "https://cal.com/ctoalpha/intro",
-    hint: "15 min — intro + fit" 
+    hint: "Quick fit check — no prep needed" 
   },
   ctaSecondary: { label: "View Work", href: "#work" },
   ctaDemo: { label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" },
