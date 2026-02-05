@@ -45,7 +45,7 @@ export default function HomePage() {
         </section>
       </div>
 
-      {site.atlas.enabled ? <AtlasWidget products={products} /> : null}
+      {site.atlas.enabled ? <AtlasWidget /> : null}
     </main>
   );
 }
