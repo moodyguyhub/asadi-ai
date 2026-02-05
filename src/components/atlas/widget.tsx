@@ -215,7 +215,7 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
 
       const data = await response.json();
       const responseText = (data?.text || "").toString().trim() || 
-        "That's outside my portfolio scope. Please book a call for deeper discussion.";
+        "I can’t confirm that from the public portfolio pack. Ask about products (Ardura/Truvesta/etc), tech stack, shipping method, or availability—or book a call for deeper discussion.";
 
       onMessage(responseText, "assistant");
       speakText(responseText);
@@ -410,7 +410,7 @@ export function AtlasWidget() {
 
       const atlasMsg: Msg = { 
         role: "assistant", 
-        text: responseText || "That's outside my portfolio scope—please book a call for deeper discussion.",
+        text: responseText || "I can’t confirm that from the public portfolio pack. Ask about products, stack, shipping method, or availability—or book a call for deeper discussion.",
         isTyping: true 
       };
       setMsgs((m) => [...m, atlasMsg]);
