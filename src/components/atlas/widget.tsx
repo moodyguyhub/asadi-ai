@@ -58,6 +58,16 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
   const [status, setStatus] = useState<"idle" | "listening" | "processing" | "speaking">("idle");
   const [transcript, setTranscript] = useState("");
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const silenceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastHeardTextRef = useRef<string>("");
+  const hasPendingSendRef = useRef(false);
+  const shouldAutoRestartRef = useRef(false);
+  const statusRef = useRef<typeof status>("idle");
+
+  const setStatusSafe = (next: typeof status) => {
+    statusRef.current = next;
+    setStatus(next);
+  };
 
   // Initialize speech recognition
   useEffect(() => {
@@ -65,36 +75,77 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-    recognition.continuous = false;
+    recognition.continuous = true;
     recognition.interimResults = true;
     recognition.lang = "en-US";
 
+    const clearSilenceTimer = () => {
+      if (silenceTimerRef.current) {
+        clearTimeout(silenceTimerRef.current);
+        silenceTimerRef.current = null;
+      }
+    };
+
+    const scheduleEndpoint = () => {
+      clearSilenceTimer();
+      silenceTimerRef.current = setTimeout(() => {
+        // If we've heard anything, treat this as end-of-turn.
+        const textToSend = lastHeardTextRef.current.trim();
+        if (!textToSend) return;
+        if (hasPendingSendRef.current) return;
+        hasPendingSendRef.current = true;
+        try {
+          recognition.stop();
+        } catch {
+          // ignore
+        }
+        handleUserSpeech(textToSend);
+      }, 900);
+    };
+
     recognition.onstart = () => {
       setIsListening(true);
-      setStatus("listening");
+      setStatusSafe("listening");
     };
 
     recognition.onresult = (event) => {
-      const current = event.resultIndex;
-      const result = event.results[current];
-      setTranscript(result[0].transcript);
-      
-      if (result.isFinal) {
-        handleUserSpeech(result[0].transcript);
+      // Aggregate results across the session so we don't send partial mid-utterance.
+      let interimText = "";
+      let finalText = "";
+
+      for (let i = 0; i < event.results.length; i++) {
+        const res = event.results[i];
+        const t = (res?.[0]?.transcript || "").toString();
+        if (res.isFinal) finalText += t;
+        else interimText += t;
       }
+
+      const combined = `${finalText} ${interimText}`.trim();
+      lastHeardTextRef.current = combined;
+      setTranscript(combined);
+
+      // Debounce send until user stops speaking (silence).
+      scheduleEndpoint();
     };
 
     recognition.onend = () => {
       setIsListening(false);
-      if (status === "listening") {
-        setStatus("idle");
+      // If we are still in "listening" mode, Chrome sometimes ends the session abruptly.
+      if (shouldAutoRestartRef.current && statusRef.current === "listening" && !hasPendingSendRef.current) {
+        try {
+          recognition.start();
+          return;
+        } catch {
+          // fall through
+        }
       }
+      if (statusRef.current === "listening") setStatusSafe("idle");
     };
 
     recognition.onerror = (event) => {
       console.error("Speech recognition error:", event.error);
       setIsListening(false);
-      setStatus("idle");
+      setStatusSafe("idle");
     };
 
     recognitionRef.current = recognition;
@@ -103,6 +154,7 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
     speakText("I'm Atlas, Mahmood's Chief of AI Staff. Portfolio scope only. How can I help?");
 
     return () => {
+      clearSilenceTimer();
       recognition.abort();
       window.speechSynthesis?.cancel();
     };
@@ -111,6 +163,14 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
 
   const speakText = useCallback((text: string) => {
     if (!isSynthesisSupported()) return;
+
+    // Prevent TTS from racing with recognition (can cause self-echo / cutoffs).
+    try {
+      shouldAutoRestartRef.current = false;
+      recognitionRef.current?.stop();
+    } catch {
+      // ignore
+    }
 
     window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
@@ -126,11 +186,11 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
 
     utterance.onstart = () => {
       setIsSpeaking(true);
-      setStatus("speaking");
+      setStatusSafe("speaking");
     };
     utterance.onend = () => {
       setIsSpeaking(false);
-      setStatus("idle");
+      setStatusSafe("idle");
     };
 
     window.speechSynthesis.speak(utterance);
@@ -140,8 +200,9 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
     const trimmed = text.trim();
     if (!trimmed) return;
 
-    setStatus("processing");
+    setStatusSafe("processing");
     setTranscript("");
+    lastHeardTextRef.current = "";
     onMessage(trimmed, "user");
     trackEvent("atlas_voice_query", { query: trimmed.slice(0, 50) });
 
@@ -162,18 +223,24 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
       const errorMsg = "Atlas is temporarily unavailable. Please use the booking link.";
       onMessage(errorMsg, "assistant");
       speakText(errorMsg);
+    } finally {
+      hasPendingSendRef.current = false;
     }
   }, [onMessage, speakText]);
 
   const startListening = () => {
     if (recognitionRef.current && !isListening && !isSpeaking) {
       setTranscript("");
+      lastHeardTextRef.current = "";
+      hasPendingSendRef.current = false;
+      shouldAutoRestartRef.current = true;
       recognitionRef.current.start();
     }
   };
 
   const stopListening = () => {
     if (recognitionRef.current && isListening) {
+      shouldAutoRestartRef.current = false;
       recognitionRef.current.stop();
     }
   };
@@ -354,9 +421,9 @@ export function AtlasWidget() {
         isTyping: true 
       }]);
     } finally {
-      setTimeout(() => inputRef.current?.focus(), 50);
+      if (!voiceMode) setTimeout(() => inputRef.current?.focus(), 50);
     }
-  }, [isTyping]);
+  }, [isTyping, voiceMode]);
 
   const handleTypingComplete = useCallback((idx: number) => {
     setMsgs((m) => m.map((msg, i) => i === idx ? { ...msg, isTyping: false } : msg));
