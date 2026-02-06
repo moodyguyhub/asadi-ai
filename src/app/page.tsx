@@ -21,10 +21,10 @@ export default function HomePage() {
 
         {/* Metrics strip - premium styling */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs tracking-wide">
-          {heroMetrics.map((metric, i) => (
-            <span key={metric} className="flex items-center gap-4 text-white/45">
+          {heroMetrics.map((metric) => (
+            <span key={metric} className="flex items-center gap-2 text-white/45">
+              <span className="text-white/15">•</span>
               {metric}
-              {i < heroMetrics.length - 1 && <span className="text-white/15">•</span>}
             </span>
           ))}
         </div>
