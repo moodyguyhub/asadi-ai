@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { site } from "@/content/site";
 import { Button } from "@/components/catalyst/button";
-import { EnvelopeIcon, CheckIcon } from "@heroicons/react/20/solid";
+import { EnvelopeIcon, CheckIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import { trackEvent } from "@/lib/analytics";
 
 export function Contact() {
@@ -46,10 +46,14 @@ export function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               color="accent" 
-              className="px-6 py-3 shadow-lg shadow-[rgba(var(--accent),0.25)] hover:shadow-[rgba(var(--accent),0.35)] transition-shadow"
+              className="px-6 py-3 !rounded-xl !items-center tracking-tight shadow-lg shadow-[rgba(var(--accent),0.22)] hover:shadow-[rgba(var(--accent),0.34)] transition-all hover:-translate-y-0.5"
               onClick={() => trackEvent("cta_book_call_30min", { source: "contact" })}
             >
-              {site.ctaPrimary.label}
+              <span>
+                Book a Strategy Consult
+                <span className="ml-1 text-xs opacity-70">(30 min)</span>
+              </span>
+              <ArrowRightIcon data-slot="icon" className="!size-4" />
             </Button>
 
             <Button 

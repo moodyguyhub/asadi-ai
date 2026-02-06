@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { site } from "@/content/site";
 import { Button } from "@/components/catalyst/button";
 import { trackEvent } from "@/lib/analytics";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
 export function Hero() {
   return (
@@ -62,12 +63,31 @@ export function Hero() {
             transition={{ delay: 0.55, duration: 0.5 }}
             className="flex flex-col gap-3"
           >
-            <div className="flex flex-wrap items-center gap-3">
-              <Button href={site.ctaPrimary.href} target="_blank" rel="noopener noreferrer" color="accent" className="px-5 py-2.5 shadow-lg shadow-[rgba(var(--accent),0.25)]" onClick={() => trackEvent("cta_book_call_30min", { source: "hero" })}>
-                {site.ctaPrimary.label}
-                <span className="ml-1.5 text-xs opacity-70 hidden sm:inline">(Recommended)</span>
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center items-stretch gap-3">
+              <Button
+                href={site.ctaPrimary.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                color="accent"
+                className="w-full sm:w-auto px-5 py-3 !rounded-xl !items-center tracking-tight shadow-lg shadow-[rgba(var(--accent),0.22)] hover:shadow-[rgba(var(--accent),0.34)] transition-all hover:-translate-y-0.5"
+                onClick={() => trackEvent("cta_book_call_30min", { source: "hero" })}
+              >
+                <span>
+                  Book a Strategy Consult
+                  <span className="ml-1 text-xs opacity-70">(30 min)</span>
+                </span>
+                <ArrowRightIcon data-slot="icon" className="!size-4" />
+                <span className="ml-0.5 text-xs opacity-70 hidden sm:inline">(Recommended)</span>
               </Button>
-              <Button href={site.ctaQuickChat.href} target="_blank" rel="noopener noreferrer" outline className="px-5 py-2.5" onClick={() => trackEvent("cta_quick_chat_15min", { source: "hero" })}>
+
+              <Button
+                href={site.ctaQuickChat.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                outline
+                className="w-full sm:w-auto px-5 py-3 !rounded-xl !items-center"
+                onClick={() => trackEvent("cta_quick_chat_15min", { source: "hero" })}
+              >
                 {site.ctaQuickChat.label}
               </Button>
 
@@ -77,7 +97,7 @@ export function Hero() {
                   trackEvent("atlas_opened", { source: "hero" });
                   window.dispatchEvent(new CustomEvent("atlas:open"));
                 }}
-                className="premium-link text-sm font-medium"
+                className="premium-link text-sm font-medium self-start sm:self-center"
               >
                 Ask Atlas — Chief of AI Staff (Portfolio)
               </button>
