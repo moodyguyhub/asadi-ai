@@ -36,7 +36,7 @@ export function Contact() {
       <div className="relative">
         <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">Let&apos;s Connect</h2>
         <p className="mt-4 text-zinc-400 max-w-2xl leading-relaxed">
-          For roles, consulting, or product discussions — use the fastest channel below.
+          For roles, consulting, or product discussions — use the channel below.
         </p>
 
         <div className="mt-8 flex flex-col gap-3">

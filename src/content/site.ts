@@ -7,13 +7,13 @@ export const site = {
   ctaPrimary: { 
     label: "Book a Strategy Consult (30 min)", 
     href: "https://cal.com/ctoalpha/deep-dive",
-    hint: "30 min — Strategy consult + roadmap" 
+    hint: "Strategy consult + roadmap" 
   },
   // Secondary CTA: 15-min Intro (fit check)
   ctaQuickChat: { 
     label: "15-min Intro (Fit Check)", 
     href: "https://cal.com/ctoalpha/intro",
-    hint: "15 min — Quick fit check (no prep)" 
+    hint: "Quick fit check (no prep)" 
   },
   // Tertiary: Ask Atlas link
   ctaTertiary: { label: "Ask Atlas — Chief of AI Staff (Portfolio)", href: "#atlas" },

@@ -64,8 +64,7 @@ export function Hero() {
           >
             <div className="flex flex-wrap items-center gap-3">
               <Button href={site.ctaPrimary.href} target="_blank" rel="noopener noreferrer" color="accent" className="px-5 py-2.5 shadow-lg shadow-[rgba(var(--accent),0.25)]" onClick={() => trackEvent("cta_book_call_30min", { source: "hero" })}>
-                <span className="sm:hidden">Strategy Consult (30 min)</span>
-                <span className="hidden sm:inline">{site.ctaPrimary.label}</span>
+                {site.ctaPrimary.label}
                 <span className="ml-1.5 text-xs opacity-70 hidden sm:inline">(Recommended)</span>
               </Button>
               <Button href={site.ctaQuickChat.href} target="_blank" rel="noopener noreferrer" outline className="px-5 py-2.5" onClick={() => trackEvent("cta_quick_chat_15min", { source: "hero" })}>
@@ -94,12 +93,12 @@ export function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.65, duration: 0.5 }}
-            className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3"
+            className="mt-4 flex flex-wrap gap-3"
           >
-            {["Audit-ready", "Governance-first", "Multi-tenant", "Evidence-first"].map((x) => (
+              {["Audit‑ready", "Governance‑first", "Multi‑tenant", "Evidence‑first"].map((x) => (
               <div
                 key={x}
-                className="bg-white/10 border border-white/10 rounded-full px-4 py-2.5 text-xs font-medium text-white/90 text-center tracking-wide"
+                className="inline-flex items-center justify-center bg-white/10 border border-white/10 rounded-full px-4 py-2.5 text-xs font-medium text-white/90 text-center tracking-wide whitespace-nowrap"
               >
                 {x}
               </div>
