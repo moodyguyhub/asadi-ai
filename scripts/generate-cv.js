@@ -1,4 +1,5 @@
 // scripts/generate-cv.js
+/* eslint-disable @typescript-eslint/no-require-imports */
 const path = require("path");
 const fs = require("fs");
 const puppeteer = require("puppeteer-core");

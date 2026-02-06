@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 
@@ -105,8 +106,6 @@ function LoginScreen({ onLogin }: { onLogin: () => void }) {
     </div>
   );
 }
-
-/* ─── Account Connections ───────────────────────────────────── */
 
 function AccountCard({
   platform,
@@ -452,12 +451,12 @@ export default function PublisherPage() {
               Compose, preview, and publish to LinkedIn and X.
             </p>
           </div>
-          <a
+          <Link
             href="/"
             className="text-xs text-zinc-500 hover:text-white transition"
           >
             ← Back to Portfolio
-          </a>
+          </Link>
         </div>
 
         {/* Connected Accounts */}
