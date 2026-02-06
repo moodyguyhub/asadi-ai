@@ -1,36 +1,62 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# asadi.ai — Personal Portfolio & AI Assistant
+
+[![CI](https://github.com/moodyguyhub/asadi-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/moodyguyhub/asadi-ai/actions/workflows/ci.yml)
+[![Deploy](https://img.shields.io/badge/Vercel-deployed-black?logo=vercel)](https://asadi.ai)
+
+> AI-Native Technical Leader — [asadi.ai](https://asadi.ai)
+
+## Features
+
+- ⚡ Built with Next.js 16, React 19, TypeScript, Tailwind CSS 4
+- 🤖 **Atlas** — AI-powered portfolio assistant with voice support (OpenAI TTS)
+- 📱 **Social Publisher** — Publish to LinkedIn / X with encrypted tokens & content safety scanning
+- 🗃️ PostgreSQL + Prisma ORM with driver adapters
+- 📊 Vercel Analytics with custom event tracking
+- 🔒 AES-256-GCM token encryption, audit trails, idempotency keys
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.example .env.local
+
+# Generate Prisma client
+npx prisma generate
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 16 (App Router, Turbopack) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4, Framer Motion |
+| UI | Catalyst (Headless UI), Heroicons |
+| Database | PostgreSQL + Prisma 7 |
+| AI | OpenAI (GPT-4o-mini, TTS) |
+| Hosting | Vercel |
+| Storage | S3-compatible (AWS / R2) |
+| Testing | Vitest |
+| CI | GitHub Actions |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server |
+| `npm run build` | Production build |
+| `npm run lint` | Lint (excludes Catalyst) |
+| `npm run test` | Run all tests |
+| `npm run test:atlas` | Run Atlas router tests |
+| `npm run cv:pdf` | Generate CV PDF from HTML |
+| `npm run db:migrate` | Run Prisma migrations |
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[MIT](LICENSE)
