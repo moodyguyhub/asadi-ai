@@ -70,6 +70,9 @@ Sovereign AI workspace for multi-tenant agent orchestration.
 - Evidence-first workflows (receipts, provenance)
 - Stack: Next.js, Python, FastAPI
 
+**Equira Governance Depth:**
+Equira is where the governance patterns proven in Truvesta and Ardura were generalized into reusable infrastructure. Tenant isolation is enforced at the orchestration layer — agents cannot access cross-tenant context or shared memory. Every agent step passes through a phase gate: outputs must be verified before the next agent runs, and failure halts the chain (agents cannot skip gates or self-promote). Every workflow completion carries an evidence pack with full provenance — inputs, agent decisions, and output attribution. Shared-context multi-agent execution was explicitly rejected; each tenant's agent runs in an isolated cage with explicit input/output contracts, no implicit state.
+
 ### Scanminers (Mining/GeoTech) — Ongoing
 AI-powered mineral exploration targeting.
 - Knowledge workflows for research ingestion
