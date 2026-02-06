@@ -27,7 +27,7 @@ export function About() {
         >
           <div className="relative w-[280px] sm:w-[360px] aspect-[3/4] rounded-xl overflow-hidden ring-1 ring-white/10">
             <Image
-              src="/396A9961.JPG"
+              src="/portrait.jpg"
               alt="Mahmood Asadi"
               fill
               className="object-cover object-top"
