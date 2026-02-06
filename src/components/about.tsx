@@ -47,7 +47,7 @@ export function About() {
             and auditability are enforced by infrastructure — not policy.
           </p>
           <p className="mt-3 text-base sm:text-lg text-[rgb(var(--accent))] font-medium">
-            Governance-first systems — auditability enforced, not promised.
+            I ship at startup speed — with auditability enforced by infrastructure, not promised.
           </p>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">

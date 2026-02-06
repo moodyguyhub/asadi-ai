@@ -50,7 +50,7 @@ export function Hero() {
                 {site.hookLine1} {site.hookLine2}
               </span>
               <span className="muted">
-                {" "}Proof-driven, governance-first delivery.
+                {" "}Proof-driven. Governance enforced by infrastructure, not policy.
               </span>
             </motion.p>
           </div>
