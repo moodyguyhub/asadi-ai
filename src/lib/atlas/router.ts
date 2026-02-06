@@ -67,7 +67,7 @@ export function pickTopics(message: string): Topic[] {
 
   // Core topics
   if (/stack|tech|typescript|next\.?js|tailwind|framer|node\.?js|postgres|prisma|vercel|docker|github actions|neon/.test(m)) topics.push("stack");
-  if (/ship|shipped|3 weeks|weeks|velocity|cadence|evidence gates|vertical slicing|daily deploy/.test(m)) topics.push("shipping");
+  if (/ship|shipped|weeks|velocity|cadence|evidence gates|vertical slicing|daily deploy/.test(m)) topics.push("shipping");
   if (/agent|multi-agent|orchestrat|workflow|planner|specialist|eval|trace|audit trail/.test(m)) topics.push("orchestration");
 
   // Governance / senior reviewer questions

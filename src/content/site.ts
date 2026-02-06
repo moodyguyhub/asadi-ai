@@ -2,7 +2,7 @@ export const site = {
   name: "Mahmood Asadi",
   title: "AI-Native Technical Leader",
   hookLine1: "6 Products. 4 Industries.",
-  hookLine2: "Shipped in Weeks.",
+  hookLine2: "Governance enforced.",
   // Primary CTA: 30-min Strategy Consult (recommended)
   ctaPrimary: { 
     label: "Book a Strategy Consult (30 min)", 
@@ -30,7 +30,7 @@ export const site = {
     chips: [
       "How would you de-risk an AI rollout?",
       "Show auditability receipts",
-      "What can Mahmood ship in 3 weeks?",
+      "How do you prevent unsafe AI actions?",
       "Availability?",
     ],
     ctaPrompt: "If you want to apply this to your environment, book a 30-min strategy consult.",

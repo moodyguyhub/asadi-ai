@@ -36,8 +36,8 @@ This worldview is consistent across all 6 products, 4 industries, and the CV.
 - Location: Cyprus (open to relocation)
 - Contact: mahmood@asadi.ai | linkedin.com/in/mahmoodasadi1 | asadi.ai
 
-## Shipping Velocity — How Mahmood Ships Fast
-Ardura built in 2 weeks (component reuse from Truvesta). Truvesta built in 3 weeks (intensive cadence). Method:
+## Shipping Method — How Mahmood Ships
+Method:
 1. Vertical slicing — pick one user flow, ship it end-to-end
 2. Agent-first architecture — LLM handles edge cases, core logic stays deterministic
 3. Evidence gates — every merge needs a screenshot/log proof
@@ -54,7 +54,7 @@ This powers Truvesta's AI-driven decisioning and Scanminers' document extraction
 
 ## Products Portfolio (6 products, 4 industries)
 
-### Truvesta (Fintech) — Built in 3 weeks
+### Truvesta (Fintech)
 Dealing desk intelligence for Forex/CFD brokers.
 - Real-time risk signals, exposure heatmaps, scenario simulation
 - Online trading platform integration, audit-ready events
@@ -64,16 +64,17 @@ Dealing desk intelligence for Forex/CFD brokers.
 **Truvesta Governance Depth:**
 Audit integrity is enforced below the application layer. Audit events are hash-chained, written synchronously (business logic fails if the audit write fails), and protected by database triggers that prevent UPDATE or DELETE — even for DBAs. CI runs a script (invariants-verify.sh) that actively attempts to violate each invariant and fails the build if it succeeds. There is no execution path in the system; shadow mode is a hard invariant (INV-NO-EXECUTE), not a configuration. Auth failures are audited alongside successes for forensic-grade traceability. Async audit writes were explicitly rejected — convenience was traded for deterministic traceability.
 
-### Ardura (Fintech) — Built in 2 weeks
+### Ardura (Fintech)
 AI-native CRM with churn prediction and retention automation.
 - Signal → segment → action loops
 - Automation rules + evaluation traces
 - Stack: Next.js, Prisma, PostgreSQL
 
 **Ardura Governance Depth:**
-AI predictions are surfaced as recommendations to operators — they never auto-execute, even when model confidence is high. Every automation rule carries an evaluation trace: model confidence, input features, and decision rationale. Operators approve, modify, or reject each action, and that decision is logged with full attribution. The 2-week build was achieved through disciplined component reuse from Truvesta's governance stack, not by cutting safety. Auto-execution of AI-driven retention actions was explicitly rejected — operator judgment is a hard requirement, not a convenience layer.
+AI predictions are surfaced as recommendations to operators — they never auto-execute, even when model confidence is high. Every automation rule carries an evaluation trace: model confidence, input features, and decision rationale. Operators approve, modify, or reject each action, and that decision is logged with full attribution. The system reused governance components from Truvesta without cutting safety. Auto-execution of AI-driven retention actions was explicitly rejected — operator judgment is a hard requirement, not a convenience layer.
 
-### Equira (AI Infrastructure) — Built in 4 weeks
+
+### Equira (AI Infrastructure)
 Sovereign AI workspace for multi-tenant agent orchestration.
 - Multi-agent orchestration with phase gates
 - Evidence-first workflows (receipts, provenance)
@@ -91,7 +92,7 @@ AI-powered mineral exploration targeting.
 **Scanminers Governance Depth:**
 Scanminers is where evidence-first thinking was stress-tested outside fintech, in a domain where wrong AI outputs cost physical drill spend. All AI outputs are explicitly framed as hypotheses, never conclusions — each carries structured uncertainty metadata declaring confidence bounds and data-coverage gaps. No targeting recommendation advances to planning without geologist sign-off. RAG ingestion preserves full source provenance so every extracted fact links to its origin document. The system is designed to surface what it doesn't know, not just what it thinks it knows. Presenting AI outputs as high-confidence conclusions was explicitly rejected — false certainty in exploration is more expensive than acknowledged uncertainty.
 
-### Finura (EdTech) — Built in 3 weeks
+### Finura (EdTech)
 Multi-tenant trading education marketplace.
 - Multi-tenant architecture + strict access boundaries
 - Risk-first posture, compliance-ready
@@ -100,7 +101,7 @@ Multi-tenant trading education marketplace.
 **Finura Governance Depth:**
 Content governance is enforced at the platform layer: trading-related claims require explicit risk disclaimers, and academies inherit compliance defaults at creation. Tenant isolation prevents cross-academy learner data exposure. Implicit performance promises were explicitly rejected — operators cannot publish trading content without appropriate disclaimers.
 
-### Chessio (EdTech) — Built in 2 weeks
+### Chessio (EdTech)
 AI-guided chess academy with structured curriculum.
 - Progressive curriculum engine
 - Clean learning UX

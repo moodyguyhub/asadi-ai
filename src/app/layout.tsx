@@ -5,12 +5,12 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Mahmood Asadi — AI-Native Technical Leader",
-  description: "6 products. 4 industries. Shipped in weeks. Audit-ready, agent-orchestrated delivery.",
+  description: "6 products. 4 industries. Governance enforced by infrastructure, not policy.",
   keywords: ["AI engineering", "CTO", "technical leader", "fintech", "edtech", "agent workflows"],
   authors: [{ name: "Mahmood Asadi", url: "https://asadi.ai" }],
   openGraph: {
     title: "Mahmood Asadi — AI-Native Technical Leader",
-    description: "6 products • 4 industries • Shipped in weeks",
+    description: "6 products • 4 industries • Governance enforced",
     url: "https://asadi.ai",
     siteName: "Mahmood Asadi",
     locale: "en_US",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Mahmood Asadi — AI-Native Technical Leader",
-    description: "6 products • 4 industries • Shipped in weeks",
+    description: "6 products • 4 industries • Governance enforced",
     images: ["/og-image.svg"],
   },
   icons: {

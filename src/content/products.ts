@@ -4,7 +4,6 @@ export type Product = {
   oneLiner: string;
   businessImpact: string; // Business outcome line for conversion
   industry: string;
-  builtIn: string; // e.g., "3 weeks"
   featured?: boolean;
   stack: string[];
   proofPoints: string[];
@@ -25,7 +24,6 @@ export const products: Product[] = [
     oneLiner: "Real-time dealing desk intelligence for Forex/CFD brokers.",
     businessImpact: "Tamper-evident governance — hash-chained audit logs, DB-level immutability, CI that attacks its own invariants.",
     industry: "Fintech",
-    builtIn: "3 weeks",
     featured: true,
     stack: ["Next.js", "PostgreSQL", "Prisma", "Realtime UI", "Audit Trail"],
     proofPoints: [
@@ -61,12 +59,11 @@ export const products: Product[] = [
     oneLiner: "AI-native CRM with churn prediction and retention automation.",
     businessImpact: "AI recommends, humans decide — churn signals route to operators, never auto-execute, with full evaluation traces.",
     industry: "Fintech",
-    builtIn: "2 weeks",
     stack: ["Next.js", "Prisma", "PostgreSQL", "Segmentation", "Automation"],
     proofPoints: [
       "AI predictions surfaced, never auto-executed",
       "Every automation rule carries an evaluation trace",
-      "Component reuse from Truvesta — 2-week build",
+      "Component reuse from Truvesta governance stack",
     ],
     screenshot: { src: "/products/ardura.png", alt: "Ardura UI screenshot" },
     details: {
@@ -77,12 +74,12 @@ export const products: Product[] = [
         "Human-in-the-loop: operators approve, modify, or reject every automation rule",
         "Evaluation traces attached to every prediction — model confidence, input features, decision rationale",
         "Segment → action loops are auditable: who approved what, when, and why",
-        "Component reuse from Truvesta governance stack — shipped in 2 weeks without cutting safety",
+        "Component reuse from Truvesta governance stack — safety invariants preserved",
       ],
       outcomes: [
         "Zero autonomous actions — every retention intervention is operator-approved",
         "Auditable decision chain from churn signal to customer action",
-        "2-week delivery via disciplined reuse, not scope cuts",
+        "Disciplined reuse without cutting governance",
       ],
       role: ["Product engineering", "Full-stack implementation"],
       links: [
@@ -96,7 +93,6 @@ export const products: Product[] = [
     oneLiner: "Sovereign AI workspace for multi-tenant agent orchestration.",
     businessImpact: "Every agent runs in a tenant-isolated cage with phase gates — no shared context, no silent failures, provenance on every output.",
     industry: "AI Infrastructure",
-    builtIn: "4 weeks",
     stack: ["Next.js", "Python", "FastAPI", "Orchestration", "Evidence Packs"],
     proofPoints: [
       "Hard tenant isolation — no cross-tenant data leakage path",
@@ -129,7 +125,6 @@ export const products: Product[] = [
     oneLiner: "AI-powered mineral exploration targeting.",
     businessImpact: "AI generates hypotheses, never conclusions — every targeting output carries structured uncertainty and requires geologist sign-off.",
     industry: "Mining / GeoTech",
-    builtIn: "Ongoing",
     stack: ["Geodata", "AI/RAG", "Workflows", "Next.js"],
     proofPoints: [
       "AI outputs framed as hypotheses, never conclusions",
@@ -165,7 +160,6 @@ export const products: Product[] = [
     oneLiner: "Multi-tenant trading education marketplace.",
     businessImpact: "Tenant-isolated academies with content governance — no performance claims without disclaimers, progress auditable by design.",
     industry: "EdTech",
-    builtIn: "3 weeks",
     stack: ["Next.js", "Prisma", "PostgreSQL", "Multi-tenant"],
     proofPoints: [
       "Content governance: no trading performance claims without disclaimers",
@@ -195,7 +189,6 @@ export const products: Product[] = [
     oneLiner: "AI-guided chess academy with structured curriculum.",
     businessImpact: "Progression earned through demonstrated skill, not engagement metrics — incentives aligned to learning, not retention.",
     industry: "EdTech",
-    builtIn: "2 weeks",
     stack: ["Next.js", "Prisma", "PostgreSQL", "Curriculum Engine"],
     proofPoints: [
       "Progression gated by skill demonstration, not time-on-platform",

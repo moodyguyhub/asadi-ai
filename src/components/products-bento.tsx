@@ -46,10 +46,6 @@ function ProductCard({
           hint={`public${product.screenshot.src}`}
           featured={product.featured || product.id === "chessio"}
         />
-        <div className="absolute bottom-3 right-3 text-[11px] px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-white/10 font-medium tracking-wide">
-          <span className="text-[rgb(var(--accent))]">Built in</span>{" "}
-          <span className="text-white/90">{product.builtIn}</span>
-        </div>
       </div>
 
       {/* Content below */}
@@ -91,9 +87,6 @@ function ProductDialog({ product, open, onClose }: { product: Product | null; op
           <p className="mt-1 text-sm text-zinc-400">{product.oneLiner}</p>
           <div className="mt-2 flex items-center gap-2">
             <Badge color="zinc">{product.industry}</Badge>
-            <span className="text-xs text-zinc-400">
-              Built in <span className="text-white font-medium">{product.builtIn}</span>
-            </span>
           </div>
         </div>
         <Button plain onClick={onClose}>

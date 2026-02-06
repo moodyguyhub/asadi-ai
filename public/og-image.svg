@@ -24,7 +24,7 @@
   <!-- Stats -->
   <text x="80" y="380" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="600" fill="#ffffff">6 products</text>
   <text x="80" y="440" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="600" fill="#ffffff">4 industries</text>
-  <text x="80" y="500" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="600" fill="#ffffff">Shipped in weeks</text>
+  <text x="80" y="500" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="600" fill="#ffffff">Governance enforced</text>
   
   <!-- Accent dots -->
   <circle cx="60" cy="365" r="6" fill="#00d4aa"/>

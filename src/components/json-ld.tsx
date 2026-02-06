@@ -25,7 +25,7 @@ export function JsonLd() {
     name: "Mahmood Asadi — AI-Native Technical Leader",
     url: "https://asadi.ai",
     description:
-      "Portfolio of Mahmood Asadi — 6 products, 4 industries, shipped in weeks.",
+      "Portfolio of Mahmood Asadi — 6 products, 4 industries. Governance enforced by infrastructure, not policy.",
   };
 
   return (
