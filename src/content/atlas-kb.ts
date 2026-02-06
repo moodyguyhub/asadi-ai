@@ -17,7 +17,7 @@ export const ATLAS_KB_SOURCES = [
 ] as const;
 
 export const ATLAS_KB = `
-# Mahmood Asadi — AI-Native Technical Leader | Fintech Systems Architect | Enterprise AI Builder
+# Mahmood Asadi — AI-Native Technical Leader
 
 ## Professional Summary
 - AI-native technical leader shipping enterprise products fast without sacrificing governance
