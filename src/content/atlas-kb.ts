@@ -79,6 +79,9 @@ AI-powered mineral exploration targeting.
 - Structured outputs for targeting hypotheses
 - Stack: Geodata, AI/RAG, Next.js
 
+**Scanminers Governance Depth:**
+Scanminers is where evidence-first thinking was stress-tested outside fintech, in a domain where wrong AI outputs cost physical drill spend. All AI outputs are explicitly framed as hypotheses, never conclusions — each carries structured uncertainty metadata declaring confidence bounds and data-coverage gaps. No targeting recommendation advances to planning without geologist sign-off. RAG ingestion preserves full source provenance so every extracted fact links to its origin document. The system is designed to surface what it doesn't know, not just what it thinks it knows. Presenting AI outputs as high-confidence conclusions was explicitly rejected — false certainty in exploration is more expensive than acknowledged uncertainty.
+
 ### Finura (EdTech) — Built in 3 weeks
 Multi-tenant trading education marketplace.
 - Multi-tenant architecture + strict access boundaries
