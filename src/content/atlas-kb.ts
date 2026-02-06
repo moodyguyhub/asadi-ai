@@ -88,11 +88,17 @@ Multi-tenant trading education marketplace.
 - Risk-first posture, compliance-ready
 - Stack: Next.js, Prisma, PostgreSQL
 
+**Finura Governance Depth:**
+Content governance is enforced at the platform layer: trading-related claims require explicit risk disclaimers, and academies inherit compliance defaults at creation. Tenant isolation prevents cross-academy learner data exposure. Implicit performance promises were explicitly rejected — operators cannot publish trading content without appropriate disclaimers.
+
 ### Chessio (EdTech) — Built in 2 weeks
 AI-guided chess academy with structured curriculum.
 - Progressive curriculum engine
 - Clean learning UX
 - Stack: Next.js, Prisma, PostgreSQL
+
+**Chessio Design Note:**
+Progression is gated by demonstrated skill, not engagement metrics. Advancement requires proven ability, keeping incentives aligned to learning outcomes rather than platform retention.
 
 ## Tech Stack Summary
 - Frontend: Next.js, TypeScript, Tailwind, Framer Motion
