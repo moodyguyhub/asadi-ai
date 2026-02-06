@@ -30,9 +30,9 @@ export function About() {
               src="/portrait.jpg"
               alt="Mahmood Asadi"
               fill
-              className="object-cover object-[center_20%]"
+              className="object-cover object-center"
+              quality={70}
               sizes="(max-width: 640px) 280px, 360px"
-              priority
             />
           </div>
         </motion.div>
