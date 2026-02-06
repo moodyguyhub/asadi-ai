@@ -52,6 +52,9 @@ Dealing desk intelligence for Forex/CFD brokers.
 - Dealer-first UX: alerts, decisions, drilldowns
 - Stack: Next.js, PostgreSQL, Prisma, Realtime UI
 
+**Truvesta Governance Depth:**
+Audit integrity is enforced below the application layer. Audit events are hash-chained, written synchronously (business logic fails if the audit write fails), and protected by database triggers that prevent UPDATE or DELETE — even for DBAs. CI runs a script (invariants-verify.sh) that actively attempts to violate each invariant and fails the build if it succeeds. There is no execution path in the system; shadow mode is a hard invariant (INV-NO-EXECUTE), not a configuration. Auth failures are audited alongside successes for forensic-grade traceability. Async audit writes were explicitly rejected — convenience was traded for deterministic traceability.
+
 ### Ardura (Fintech) — Built in 2 weeks
 AI-native CRM with churn prediction and retention automation.
 - Signal → segment → action loops
