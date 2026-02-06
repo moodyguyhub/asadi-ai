@@ -30,7 +30,7 @@ export function About() {
               src="/portrait.jpg"
               alt="Mahmood Asadi"
               fill
-              className="object-cover object-center"
+              className="object-cover object-[center_20%]"
               sizes="(max-width: 640px) 280px, 360px"
               priority
             />
