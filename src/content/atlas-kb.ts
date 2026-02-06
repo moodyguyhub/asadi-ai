@@ -23,12 +23,12 @@ export const ATLAS_KB = `
 - AI-native technical leader shipping enterprise products fast without sacrificing governance
 - Built and deployed 6 production platforms across fintech, edtech, mining/GeoTech, and AI infrastructure
 - Uses vendor-neutral, LLM-assisted multi-agent workflows (structured handoffs, shared state, verification gates)
-- 10+ years brokerage domain depth: CRM, dealing desk intelligence, portals, PAMM, payments, MT4/MT5 integrations
+- 10+ years brokerage domain depth: CRM, dealing desk intelligence, portals, social trading, payments, online trading platform integrations
 - Location: Cyprus (open to relocation)
 - Contact: mahmood@asadi.ai | linkedin.com/in/mahmoodasadi1 | asadi.ai
 
 ## Shipping Velocity — How Mahmood Ships Fast
-Ardura built in 3 weeks (intensive cadence). Truvesta built in 3 weeks (intensive cadence). Method:
+Ardura built in 2 weeks (component reuse from Truvesta). Truvesta built in 3 weeks (intensive cadence). Method:
 1. Vertical slicing — pick one user flow, ship it end-to-end
 2. Agent-first architecture — LLM handles edge cases, core logic stays deterministic
 3. Evidence gates — every merge needs a screenshot/log proof
@@ -48,11 +48,11 @@ This powers Truvesta's AI-driven decisioning and Scanminers' document extraction
 ### Truvesta (Fintech) — Built in 3 weeks
 Dealing desk intelligence for Forex/CFD brokers.
 - Real-time risk signals, exposure heatmaps, scenario simulation
-- MT5 integration, audit-ready events
+- Online trading platform integration, audit-ready events
 - Dealer-first UX: alerts, decisions, drilldowns
 - Stack: Next.js, PostgreSQL, Prisma, Realtime UI
 
-### Ardura (Fintech) — Built in 3 weeks
+### Ardura (Fintech) — Built in 2 weeks
 AI-native CRM with churn prediction and retention automation.
 - Signal → segment → action loops
 - Automation rules + evaluation traces
@@ -87,7 +87,7 @@ AI-guided chess academy with structured curriculum.
 - Backend: Node.js, PostgreSQL, Prisma, REST/Realtime patterns
 - AI: Agent workflows, RAG patterns, eval/trace discipline
 - Infra: Vercel, Docker, GitHub Actions, Neon (PostgreSQL)
-- Brokerage: MT4/MT5 Manager API, payment gateways, platform connectors
+- Brokerage: Online trading platform APIs, payment gateways, platform connectors
 
 ## Availability & Booking
 - Availability rule (evergreen): If there are slots on the booking page, Mahmood is available—pick a time that suits you.

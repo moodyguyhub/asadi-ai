@@ -53,7 +53,7 @@ export function pickTopics(message: string): Topic[] {
   }
 
   // Products (with synonyms)
-  if (/\btruvesta\b|dealing desk|dealer|exposure|heatmap|mt5|forex|cfd|risk signals?/.test(m)) topics.push("products.truvesta");
+  if (/\btruvesta\b|dealing desk|dealer|exposure|heatmap|trading platform|forex|cfd|risk signals?/.test(m)) topics.push("products.truvesta");
   if (/\bardura\b|\bcrm\b|broker crm|churn|retention|segment/.test(m)) topics.push("products.ardura");
   if (/\bequira\b|sovereign ai|workspace|multi-tenant agent|phase gates/.test(m)) topics.push("products.equira");
   if (/\bscanminers\b|mineral|geotech|exploration|targeting/.test(m)) topics.push("products.scanminers");
