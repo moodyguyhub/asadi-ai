@@ -50,7 +50,7 @@ export function Hero() {
                 {site.hookLine1} {site.hookLine2}
               </span>
               <span className="muted">
-                {" "}Proof-driven, enterprise-grade delivery — no hype.
+                {" "}Proof-driven, enterprise-grade delivery.
               </span>
             </motion.p>
           </div>
@@ -96,7 +96,7 @@ export function Hero() {
             transition={{ delay: 0.65, duration: 0.5 }}
             className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3"
           >
-            {["Audit-ready", "Agent-orchestrated", "Multi-tenant", "Evidence-first"].map((x) => (
+            {["Audit-ready", "Governance-first", "Multi-tenant", "Evidence-first"].map((x) => (
               <div
                 key={x}
                 className="bg-white/10 border border-white/10 rounded-full px-4 py-2.5 text-xs font-medium text-white/90 text-center tracking-wide"
