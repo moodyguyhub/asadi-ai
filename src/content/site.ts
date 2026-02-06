@@ -3,19 +3,20 @@ export const site = {
   title: "AI-Native Technical Leader",
   hookLine1: "6 Products. 4 Industries.",
   hookLine2: "Shipped in Weeks.",
-  // Primary CTA: 30-min Portfolio Walkthrough
+  // Primary CTA: 30-min Strategy Consult (recommended)
   ctaPrimary: { 
-    label: "Book a Call", 
+    label: "Book a Strategy Consult (30 min)", 
     href: "https://cal.com/ctoalpha/deep-dive",
-    hint: "30 min — walkthrough + Q&A (Recommended)" 
+    hint: "30 min — Strategy consult + roadmap" 
   },
-  // Secondary CTA: 15-min Intro
+  // Secondary CTA: 15-min Intro (fit check)
   ctaQuickChat: { 
-    label: "15-min Intro", 
+    label: "15-min Intro (Fit Check)", 
     href: "https://cal.com/ctoalpha/intro",
-    hint: "Quick fit check — no prep needed" 
+    hint: "15 min — Quick fit check (no prep)" 
   },
-  ctaSecondary: { label: "View Work", href: "#work" },
+  // Tertiary: Ask Atlas link
+  ctaTertiary: { label: "Ask Atlas — Chief of AI Staff (Portfolio)", href: "#atlas" },
   ctaDemo: { label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" },
   links: {
     email: "mahmood@asadi.ai",
@@ -28,9 +29,11 @@ export const site = {
     opening:
       "Hi — I'm Atlas. Ask about Mahmood's products, tech stack, or availability. I'll reference on-site info only.",
     chips: [
-      "How did you ship Truvesta in 3 weeks?",
-      "What's your agent workflow?",
-      "Are you currently available?",
+      "How would you de-risk an AI rollout?",
+      "Show auditability receipts",
+      "What can Mahmood ship in 3 weeks?",
+      "Availability?",
     ],
+    ctaPrompt: "If you want to apply this to your environment, book a 30-min strategy consult.",
   },
 };

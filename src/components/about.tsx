@@ -18,6 +18,9 @@ export function About() {
         ship enterprise products in weeks, not months — without sacrificing governance, security,
         or auditability.
       </p>
+      <p className="mt-3 text-base sm:text-lg text-[rgb(var(--accent))] font-medium max-w-3xl">
+        I ship at startup speed with enterprise-grade auditability.
+      </p>
 
       <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
         {aboutPillars.map((p, i) => (

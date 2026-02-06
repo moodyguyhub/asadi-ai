@@ -5,6 +5,7 @@ import { TopNav } from "@/components/top-nav";
 import { Hero } from "@/components/hero";
 import { ProductsBento } from "@/components/products-bento";
 import { About } from "@/components/about";
+import { Evidence } from "@/components/evidence";
 import { Stack } from "@/components/stack";
 import { Contact } from "@/components/contact";
 import { AtlasWidget } from "@/components/atlas/widget";
@@ -33,6 +34,9 @@ export default function HomePage() {
         </section>
         <section id="about" className="mt-20 sm:mt-28 scroll-mt-24">
           <About />
+        </section>
+        <section id="evidence" className="mt-20 sm:mt-28 scroll-mt-24">
+          <Evidence />
         </section>
         <section id="stack" className="mt-20 sm:mt-28 scroll-mt-24">
           <Stack />

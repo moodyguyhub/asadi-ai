@@ -2,6 +2,7 @@ export type Product = {
   id: string;
   name: string;
   oneLiner: string;
+  businessImpact: string; // Business outcome line for conversion
   industry: string;
   builtIn: string; // e.g., "3 weeks"
   featured?: boolean;
@@ -22,6 +23,7 @@ export const products: Product[] = [
     id: "truvesta",
     name: "Truvesta",
     oneLiner: "Real-time dealing desk intelligence for Forex/CFD brokers.",
+    businessImpact: "Faster risk decisions through real-time signals + evidence logs (reduces manual oversight).",
     industry: "Fintech",
     builtIn: "3 weeks",
     featured: true,
@@ -54,6 +56,7 @@ export const products: Product[] = [
     id: "ardura",
     name: "Ardura",
     oneLiner: "AI-native CRM with churn prediction and retention automation.",
+    businessImpact: "Retention workflows driven by churn signals (stabilizes revenue in high-volume funnels).",
     industry: "Fintech",
     builtIn: "2 weeks",
     stack: ["Next.js", "Prisma", "PostgreSQL", "Segmentation", "Automation"],
@@ -77,6 +80,7 @@ export const products: Product[] = [
     id: "equira",
     name: "Equira",
     oneLiner: "Sovereign AI workspace for multi-tenant agent orchestration.",
+    businessImpact: "Governed multi-tenant execution for AI workflows (auditability by default).",
     industry: "AI Infrastructure",
     builtIn: "4 weeks",
     stack: ["Next.js", "Python", "FastAPI", "Orchestration", "Evidence Packs"],
@@ -98,6 +102,7 @@ export const products: Product[] = [
     id: "scanminers",
     name: "Scanminers",
     oneLiner: "AI-powered mineral exploration targeting.",
+    businessImpact: "Faster hypothesis generation from fragmented geodata (accelerates exploration cycles).",
     industry: "Mining / GeoTech",
     builtIn: "Ongoing",
     stack: ["Geodata", "AI/RAG", "Workflows", "Next.js"],
@@ -122,6 +127,7 @@ export const products: Product[] = [
     id: "finura",
     name: "Finura",
     oneLiner: "Multi-tenant trading education marketplace.",
+    businessImpact: "Scalable academy creation with compliance-ready governance (reduces platform risk).",
     industry: "EdTech",
     builtIn: "3 weeks",
     stack: ["Next.js", "Prisma", "PostgreSQL", "Multi-tenant"],
@@ -143,6 +149,7 @@ export const products: Product[] = [
     id: "chessio",
     name: "Chessio",
     oneLiner: "AI-guided chess academy with structured curriculum.",
+    businessImpact: "Engagement through structured progression (reduces learner drop-off).",
     industry: "EdTech",
     builtIn: "2 weeks",
     stack: ["Next.js", "Prisma", "PostgreSQL", "Curriculum Engine"],

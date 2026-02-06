@@ -7,11 +7,54 @@ import { trackEvent } from "@/lib/analytics";
 type Msg = { role: "user" | "assistant"; text: string; isTyping?: boolean };
 
 const SUGGESTED_CHIPS = [
-  "How did Mahmood ship Ardura and Truvesta in 3 weeks?",
-  "What does Truvesta solve for Forex/CFD brokers?",
-  "What's Mahmood's tech stack and domain depth?",
-  "Is Mahmood available, and what roles is he targeting?",
+  "How would you de-risk an AI rollout?",
+  "Show auditability receipts",
+  "What can Mahmood ship in 3 weeks?",
+  "Availability?",
 ];
+
+const CTA_CONSULT = "\n\nIf you want to apply this to your environment, book a 30-min strategy consult.";
+const CTA_OUT_OF_SCOPE = "\n\nThat's outside my portfolio scope—book a consult if you want to discuss it in context.";
+
+/**
+ * Determines if user intent warrants routing to a call CTA.
+ * Returns: 'consult' | 'out-of-scope' | null
+ */
+function shouldRouteToCall(userText: string): 'consult' | 'out-of-scope' | null {
+  const lower = userText.toLowerCase();
+  
+  // Intent patterns: hire/fit/availability/pricing/timeline
+  const consultPatterns = [
+    /\b(hire|hiring|employ|contract|freelance|engage)\b/,
+    /\b(available|availability|free|open to)\b/,
+    /\b(rate|pricing|cost|budget|fee|charge)\b/,
+    /\b(timeline|deadline|when can|how soon|start date)\b/,
+    /\b(fit|good fit|right fit|match)\b/,
+    /\b(work with|work together|collaborate|partner)\b/,
+    /\b(build .* for (us|me|our)|can you build|would you build)\b/,
+    /\b(how would you .* for (us|me|our))\b/,
+    /\b(apply this|implement this|do this for)\b/,
+    /\b(next steps?|move forward|proceed|get started)\b/,
+    /\b(proposal|quote|estimate|scope)\b/,
+  ];
+  
+  // Out-of-scope patterns
+  const outOfScopePatterns = [
+    /\b(personal|private|family|hobby)\b/,
+    /\b(opinion on|what do you think about|views on)\b(?!.*(ai|agent|orchestration|fintech))/,
+    /\b(politics|religion|controversial)\b/,
+  ];
+  
+  for (const pattern of consultPatterns) {
+    if (pattern.test(lower)) return 'consult';
+  }
+  
+  for (const pattern of outOfScopePatterns) {
+    if (pattern.test(lower)) return 'out-of-scope';
+  }
+  
+  return null;
+}
 
 const OPENING_MESSAGE = "I'm Atlas — Mahmood's Chief of AI Staff (Portfolio). I operate strictly from the public knowledge pack (CV, products, stack). Ask about builds, orchestration method, roles, or availability.";
 
@@ -251,6 +294,9 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
     onMessage(trimmed, "user");
     trackEvent("atlas_voice_query", { query: trimmed.slice(0, 50) });
 
+    // Determine if we should append a CTA based on user intent
+    const routeIntent = shouldRouteToCall(trimmed);
+
     try {
       const response = await fetch("/api/atlas", {
         method: "POST",
@@ -259,8 +305,20 @@ function VoiceMode({ onClose, onMessage }: { onClose: () => void; onMessage: (te
       });
 
       const data = await response.json();
-      const responseText = (data?.text || "").toString().trim() || 
-        "I can’t confirm that from the public portfolio pack. Ask about products (Ardura/Truvesta/etc), tech stack, shipping method, or availability—or book a call for deeper discussion.";
+      const rawText = (data?.text || "").toString().trim();
+      
+      // Build response: only append CTA if intent warrants it
+      let responseText: string;
+      if (!rawText) {
+        responseText = "I can't confirm that from the public portfolio pack. Ask about products, tech stack, shipping method, or availability.";
+      } else if (routeIntent === 'consult') {
+        responseText = rawText + " If you want to apply this to your environment, book a 30-min strategy consult.";
+      } else if (routeIntent === 'out-of-scope') {
+        responseText = rawText + " That's outside my portfolio scope. Book a consult if you want to discuss it in context.";
+      } else {
+        // Normal factual answer — no CTA
+        responseText = rawText;
+      }
 
       onMessage(responseText, "assistant");
       speakText(responseText);
@@ -443,6 +501,9 @@ export function AtlasWidget() {
     setInput("");
     setIsTyping(true);
 
+    // Determine if we should append a CTA based on user intent
+    const routeIntent = shouldRouteToCall(trimmed);
+
     try {
       const response = await fetch("/api/atlas", {
         method: "POST",
@@ -451,11 +512,25 @@ export function AtlasWidget() {
       });
 
       const data = await response.json();
-      const responseText = (data?.text || "").toString().trim();
+      const rawText = (data?.text || "").toString().trim();
+      
+      // Build response: only append CTA if intent warrants it
+      let responseText: string;
+      if (!rawText) {
+        // No response from API = likely out of scope
+        responseText = "I can't confirm that from the public portfolio pack. Ask about products, stack, shipping method, or availability." + CTA_OUT_OF_SCOPE;
+      } else if (routeIntent === 'consult') {
+        responseText = rawText + CTA_CONSULT;
+      } else if (routeIntent === 'out-of-scope') {
+        responseText = rawText + CTA_OUT_OF_SCOPE;
+      } else {
+        // Normal factual answer — no CTA, keep it crisp
+        responseText = rawText;
+      }
 
       const atlasMsg: Msg = { 
         role: "assistant", 
-        text: responseText || "I can’t confirm that from the public portfolio pack. Ask about products, stack, shipping method, or availability—or book a call for deeper discussion.",
+        text: responseText,
         isTyping: true 
       };
       setMsgs((m) => [...m, atlasMsg]);

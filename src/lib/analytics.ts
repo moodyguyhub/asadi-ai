@@ -10,6 +10,7 @@ type EventName =
   | "cta_copy_email"
   | "cta_linkedin"
   | "cta_download_cv"
+  | "cta_request_artifacts"
   | "atlas_opened"
   | "atlas_chip_clicked"
   | "atlas_voice_toggle"

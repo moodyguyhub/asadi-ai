@@ -64,6 +64,9 @@ function ProductCard({
               )}
             </div>
             <p className="mt-2 text-sm text-zinc-400 leading-relaxed">{product.oneLiner}</p>
+            <p className="mt-2 text-xs text-[rgb(var(--accent))] leading-relaxed">
+              <span className="font-medium text-white/60">Outcome:</span> {product.businessImpact}
+            </p>
           </div>
         </div>
 
