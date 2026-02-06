@@ -64,8 +64,9 @@ export function Hero() {
           >
             <div className="flex flex-wrap items-center gap-3">
               <Button href={site.ctaPrimary.href} target="_blank" rel="noopener noreferrer" color="accent" className="px-5 py-2.5 shadow-lg shadow-[rgba(var(--accent),0.25)]" onClick={() => trackEvent("cta_book_call_30min", { source: "hero" })}>
-                {site.ctaPrimary.label}
-                <span className="ml-1.5 text-xs opacity-70">(Recommended)</span>
+                <span className="sm:hidden">Strategy Consult (30 min)</span>
+                <span className="hidden sm:inline">{site.ctaPrimary.label}</span>
+                <span className="ml-1.5 text-xs opacity-70 hidden sm:inline">(Recommended)</span>
               </Button>
               <Button href={site.ctaQuickChat.href} target="_blank" rel="noopener noreferrer" outline className="px-5 py-2.5" onClick={() => trackEvent("cta_quick_chat_15min", { source: "hero" })}>
                 {site.ctaQuickChat.label}

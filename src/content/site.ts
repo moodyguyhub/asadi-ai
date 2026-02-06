@@ -17,11 +17,10 @@ export const site = {
   },
   // Tertiary: Ask Atlas link
   ctaTertiary: { label: "Ask Atlas — Chief of AI Staff (Portfolio)", href: "#atlas" },
-  ctaDemo: { label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" },
   links: {
     email: "mahmood@asadi.ai",
     linkedin: "https://www.linkedin.com/in/mahmoodasadi1/",
-    cv: "/cv.pdf", // TODO add file later
+    cv: "/cv.pdf",
   },
   atlas: {
     enabled: true,

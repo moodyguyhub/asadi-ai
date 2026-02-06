@@ -3,15 +3,11 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { trackEvent } from "@/lib/analytics";
+import { site } from "@/content/site";
 
 type Msg = { role: "user" | "assistant"; text: string; isTyping?: boolean };
 
-const SUGGESTED_CHIPS = [
-  "How would you de-risk an AI rollout?",
-  "Show auditability receipts",
-  "What can Mahmood ship in 3 weeks?",
-  "Availability?",
-];
+const SUGGESTED_CHIPS = site.atlas.chips;
 
 const CTA_CONSULT = "\n\nIf you want to apply this to your environment, book a 30-min strategy consult.";
 const CTA_OUT_OF_SCOPE = "\n\nThat's outside my portfolio scope—book a consult if you want to discuss it in context.";

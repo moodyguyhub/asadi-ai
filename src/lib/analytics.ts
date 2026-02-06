@@ -1,9 +1,10 @@
 /**
- * Minimal analytics utility for tracking CTA clicks.
- * Replace with your preferred analytics provider (Plausible, Posthog, GA, etc.)
+ * Analytics utility — forwards custom events to Vercel Analytics.
+ * Events appear in your Vercel dashboard under Analytics → Custom Events.
  */
+import { track } from "@vercel/analytics";
 
-type EventName = 
+type EventName =
   | "cta_book_call_30min"
   | "cta_quick_chat_15min"
   | "cta_view_work"
@@ -17,19 +18,15 @@ type EventName =
   | "atlas_voice_query";
 
 export function trackEvent(event: EventName, properties?: Record<string, string | number | boolean>) {
-  // Log to console in dev for verification
+  // Dev logging
   if (process.env.NODE_ENV === "development") {
     console.log("[Analytics]", event, properties);
   }
 
-  // Placeholder: send to your analytics provider
-  // Example for Plausible:
-  // if (typeof window !== "undefined" && window.plausible) {
-  //   window.plausible(event, { props: properties });
-  // }
-
-  // Example for Posthog:
-  // if (typeof window !== "undefined" && window.posthog) {
-  //   window.posthog.capture(event, properties);
-  // }
+  // Send to Vercel Analytics (custom events)
+  try {
+    track(event, properties);
+  } catch {
+    // Vercel Analytics not loaded yet — silently ignore
+  }
 }
