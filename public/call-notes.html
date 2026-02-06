@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10-Minute Call — Caller Notes</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    @page { 
+      size: A4; 
+      margin: 0.5in; 
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      padding: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.4;
+    }
+    
+    @media print {
+      body { 
+        background: #fff; 
+        color: #000; 
+        padding: 0;
+      }
+      .time { color: #0891b2 !important; }
+      .verbatim { 
+        background: #f3f4f6 !important; 
+        border-left-color: #0891b2 !important;
+        color: #1f2937 !important;
+      }
+      .section { border-color: #e5e7eb !important; }
+    }
+    
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    
+    .subtitle {
+      font-size: 14px;
+      color: #71717a;
+      margin-bottom: 24px;
+    }
+    
+    .section {
+      border-top: 1px solid #27272a;
+      padding: 16px 0;
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .time {
+      font-size: 13px;
+      font-weight: 600;
+      color: #22d3ee;
+      font-variant-numeric: tabular-nums;
+      min-width: 70px;
+    }
+    
+    .label {
+      font-size: 15px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .verbatim {
+      background: rgba(255,255,255,0.05);
+      border-left: 3px solid #22d3ee;
+      padding: 12px 16px;
+      font-size: 16px;
+      font-weight: 500;
+      margin: 8px 0;
+      border-radius: 0 8px 8px 0;
+    }
+    
+    .action {
+      font-size: 13px;
+      color: #a1a1aa;
+      margin-top: 8px;
+    }
+    
+    .questions {
+      list-style: none;
+      counter-reset: q;
+    }
+    
+    .questions li {
+      counter-increment: q;
+      font-size: 15px;
+      padding: 8px 0;
+      padding-left: 28px;
+      position: relative;
+    }
+    
+    .questions li::before {
+      content: counter(q);
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: #22d3ee;
+      font-size: 14px;
+    }
+    
+    .variant {
+      margin-top: 12px;
+    }
+    
+    .variant-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    
+    .footer {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid #27272a;
+      font-size: 12px;
+      color: #52525b;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>10-Minute Call</h1>
+  <p class="subtitle">Caller Notes — Print &amp; Keep Visible</p>
+
+  <!-- FRAME -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time">0:00</span>
+      <span class="label">Frame + Agenda</span>
+    </div>
+    <div class="verbatim">
+      "I'll do this in 10 minutes: 60 seconds context, 6 minutes proof in the UI, then 3 minutes on your constraints and next steps."
+    </div>
+    <p class="action">→ Camera on, still posture, then share screen.</p>
+  </div>
+
+  <!-- HOOK -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time">0:45</span>
+      <span class="label">The Hook</span>
+    </div>
+    <div class="verbatim">
+      "I ship at startup speed with enterprise-grade auditability. The reason that matters is: speed without governance creates risk. My work is built around receipts—logs, policies, and deterministic behavior."
+    </div>
+    <p class="action">→ Pause 2 seconds. Screen: portfolio hero only.</p>
+  </div>
+
+  <!-- PROOF #1 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time">1:45</span>
+      <span class="label">Proof #1 — One Product</span>
+    </div>
+    <div class="verbatim">
+      "This is [Product]. The outcome is [Outcome line]. The proof is in the audit trail and idempotent workflows—every decision produces a receipt."
+    </div>
+    <p class="action">→ Open product card. Point to ONE receipt element. Stop talking while you zoom.</p>
+  </div>
+
+  <!-- PROOF #2 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time">4:30</span>
+      <span class="label">Proof #2 — Pattern Travels</span>
+    </div>
+    <div class="verbatim">
+      "Different domain, same spine: tenant-safe defaults, traceability, and fail-closed behavior."
+    </div>
+    <div class="verbatim" style="margin-top: 8px;">
+      "That's why these ship in weeks—reuse the governed backbone, swap the domain modules."
+    </div>
+    <p class="action">→ Show second product (30–45 sec max).</p>
+  </div>
+
+  <!-- DISCOVERY -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time">6:30</span>
+      <span class="label">Discovery — 3 Questions Only</span>
+    </div>
+    <ol class="questions">
+      <li>"What's the highest-cost failure mode you're trying to avoid?"</li>
+      <li>"What's your data residency / security boundary?"</li>
+      <li>"What decision needs to become faster or safer in the next 30–60 days?"</li>
+    </ol>
+    <p class="action">→ Authority Pause on interruptions: stop, nod once, 1-sec delay, then answer.</p>
+  </div>
+
+  <!-- CLOSE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time">8:30</span>
+      <span class="label">The Close</span>
+    </div>
+    <div class="variant">
+      <p class="variant-label">If fit is strong:</p>
+      <div class="verbatim">
+        "Next step: a 30-minute strategy consult where we map your constraints → a scoped proof. I'll leave with a 1-page plan and measurable success criteria."
+      </div>
+    </div>
+    <div class="variant">
+      <p class="variant-label">If fit is uncertain:</p>
+      <div class="verbatim">
+        "Next step: a 15-minute fit check to confirm scope and constraints. If it's viable, we book the strategy consult."
+      </div>
+    </div>
+  </div>
+
+  <!-- EXIT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time">9:30</span>
+      <span class="label">Exit Line</span>
+    </div>
+    <div class="verbatim">
+      "Before we end—what would make this a 'yes' internally? Security sign-off, ROI, or integration feasibility?"
+    </div>
+    <div class="verbatim" style="margin-top: 8px;">
+      "Perfect. I'll follow up with the exact artifacts you need."
+    </div>
+  </div>
+
+  <div class="footer">
+    asadi.ai — 10-Minute Call Choreography
+  </div>
+</body>
+</html>

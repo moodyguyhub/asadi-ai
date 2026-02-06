@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pre-Call Checklist</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    @page { size: A4; margin: 0.5in; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0f;
+      color: #fff;
+      padding: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    
+    @media print {
+      body { background: #fff; color: #000; padding: 0; }
+      .check-item { border-color: #e5e7eb !important; }
+      .checkbox { border-color: #9ca3af !important; }
+      h2 { color: #0891b2 !important; }
+    }
+    
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    
+    .subtitle {
+      font-size: 13px;
+      color: #71717a;
+      margin-bottom: 24px;
+    }
+    
+    h2 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #22d3ee;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 24px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #27272a;
+    }
+    
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #18181b;
+    }
+    
+    .checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid #3f3f46;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    .check-content {
+      flex: 1;
+    }
+    
+    .check-label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .check-detail {
+      font-size: 12px;
+      color: #71717a;
+      margin-top: 4px;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    
+    .product-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid #27272a;
+      border-radius: 8px;
+      padding: 10px 12px;
+    }
+    
+    .product-trigger {
+      font-size: 11px;
+      color: #71717a;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    
+    .product-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    
+    .url-list {
+      list-style: none;
+      margin-top: 8px;
+    }
+    
+    .url-list li {
+      font-size: 12px;
+      padding: 4px 0;
+      font-family: 'SF Mono', Monaco, monospace;
+      color: #a1a1aa;
+    }
+    
+    .url-list li::before {
+      content: "→ ";
+      color: #22d3ee;
+    }
+    
+    .dont-list {
+      list-style: none;
+      margin-top: 8px;
+    }
+    
+    .dont-list li {
+      font-size: 13px;
+      padding: 4px 0;
+      color: #f87171;
+    }
+    
+    .dont-list li::before {
+      content: "✕ ";
+    }
+    
+    .timing {
+      font-size: 11px;
+      color: #52525b;
+      margin-top: 4px;
+    }
+    
+    .footer {
+      margin-top: 32px;
+      padding-top: 16px;
+      border-top: 1px solid #27272a;
+      font-size: 11px;
+      color: #52525b;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pre-Call Checklist</h1>
+  <p class="subtitle">Complete 5 minutes before call — prevents 90% of fumbles</p>
+
+  <h2>1. Environment (T-5 min)</h2>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Camera framing</div>
+      <div class="check-detail">Eye level, chest-up, neutral background. Light from front, not behind.</div>
+    </div>
+  </div>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Audio check</div>
+      <div class="check-detail">Test mic. Close other audio apps. Headphones preferred.</div>
+    </div>
+  </div>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Notifications OFF</div>
+      <div class="check-detail">Slack, email, calendar, system notifications — all silenced.</div>
+    </div>
+  </div>
+
+  <h2>2. Screen Share Setup (T-3 min)</h2>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Browser tabs (left → right)</div>
+      <div class="check-detail">Only these 4 tabs, in this order:</div>
+      <ul class="url-list">
+        <li>asadi.ai (hero visible)</li>
+        <li>asadi.ai/#work (products section)</li>
+        <li>asadi.ai/#evidence (Evidence section)</li>
+        <li>cal.com/ctoalpha/deep-dive (Strategy Consult)</li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Close everything else</div>
+      <div class="dont-list">
+        <li>Slack / Discord</li>
+        <li>Email client</li>
+        <li>IDE / Terminal</li>
+        <li>Any other browser windows</li>
+      </div>
+    </div>
+  </div>
+
+  <h2>3. Product Selection (before call)</h2>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Pick primary product based on their context</div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-trigger">Fintech / Broker / Risk</div>
+          <div class="product-name">Truvesta</div>
+        </div>
+        <div class="product-card">
+          <div class="product-trigger">Ops / Retention / CRM</div>
+          <div class="product-name">Ardura</div>
+        </div>
+        <div class="product-card">
+          <div class="product-trigger">Platform / Orchestration</div>
+          <div class="product-name">Equira</div>
+        </div>
+        <div class="product-card">
+          <div class="product-trigger">EdTech / Marketplace</div>
+          <div class="product-name">Finura</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Know the Outcome line</div>
+      <div class="check-detail">Read the "Outcome:" text on the product card before the call.</div>
+    </div>
+  </div>
+
+  <h2>4. Materials Ready</h2>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Caller Notes visible</div>
+      <div class="check-detail">Print or second screen: asadi.ai/call-notes.html</div>
+    </div>
+  </div>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Notepad ready</div>
+      <div class="check-detail">For capturing their answers to the 3 discovery questions.</div>
+    </div>
+  </div>
+
+  <h2>5. Final Check (T-1 min)</h2>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Browser zoom at 100%</div>
+      <div class="check-detail">Cmd/Ctrl + 0 to reset.</div>
+    </div>
+  </div>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Water nearby</div>
+    </div>
+  </div>
+  
+  <div class="check-item">
+    <div class="checkbox"></div>
+    <div class="check-content">
+      <div class="check-label">Phone on silent, face-down</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    asadi.ai — Pre-Call Checklist
+  </div>
+</body>
+</html>
