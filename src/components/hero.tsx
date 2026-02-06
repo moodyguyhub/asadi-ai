@@ -51,7 +51,7 @@ export function Hero() {
                 {site.hookLine1} {site.hookLine2}
               </span>
               <span className="muted">
-                {" "}Proof-driven. Governance enforced by infrastructure, not policy.
+                {" "}Proof-driven systems. Governance enforced by infrastructure, not policy.
               </span>
             </motion.p>
           </div>
