@@ -63,7 +63,7 @@ export function Hero() {
             className="flex flex-col gap-3"
           >
             <div className="flex flex-wrap items-center gap-3">
-              <Button href={site.ctaPrimary.href} target="_blank" rel="noopener noreferrer" color="cyan" className="px-5 py-2.5 shadow-lg shadow-[rgba(var(--accent),0.25)]" onClick={() => trackEvent("cta_book_call_30min", { source: "hero" })}>
+              <Button href={site.ctaPrimary.href} target="_blank" rel="noopener noreferrer" color="accent" className="px-5 py-2.5 shadow-lg shadow-[rgba(var(--accent),0.25)]" onClick={() => trackEvent("cta_book_call_30min", { source: "hero" })}>
                 {site.ctaPrimary.label}
                 <span className="ml-1.5 text-xs opacity-70">(Recommended)</span>
               </Button>

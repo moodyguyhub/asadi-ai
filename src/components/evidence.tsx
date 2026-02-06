@@ -92,7 +92,7 @@ export function Evidence() {
       <div className="mt-8 flex flex-wrap items-center gap-4">
         <Button
           href={artifactMailtoHref}
-          color="cyan"
+          color="accent"
           className="px-5 py-2.5"
           onClick={() => trackEvent("cta_request_artifacts", { source: "evidence" })}
         >

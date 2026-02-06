@@ -45,7 +45,7 @@ export function Contact() {
               href={site.ctaPrimary.href} 
               target="_blank"
               rel="noopener noreferrer"
-              color="cyan" 
+              color="accent" 
               className="px-6 py-3 shadow-lg shadow-[rgba(var(--accent),0.25)] hover:shadow-[rgba(var(--accent),0.35)] transition-shadow"
               onClick={() => trackEvent("cta_book_call_30min", { source: "contact" })}
             >
