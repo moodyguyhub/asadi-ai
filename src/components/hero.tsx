@@ -50,7 +50,7 @@ export function Hero() {
                 {site.hookLine1} {site.hookLine2}
               </span>
               <span className="muted">
-                {" "}Proof-driven, enterprise-grade delivery.
+                {" "}Proof-driven, governance-first delivery.
               </span>
             </motion.p>
           </div>

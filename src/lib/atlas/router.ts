@@ -10,6 +10,7 @@ export type Topic =
   | "stack"
   | "shipping"
   | "orchestration"
+  | "governance"
   | "availability"
   | "capabilities"
   | "general";
@@ -68,6 +69,11 @@ export function pickTopics(message: string): Topic[] {
   if (/stack|tech|typescript|next\.?js|tailwind|framer|node\.?js|postgres|prisma|vercel|docker|github actions|neon/.test(m)) topics.push("stack");
   if (/ship|shipped|3 weeks|weeks|velocity|cadence|evidence gates|vertical slicing|daily deploy/.test(m)) topics.push("shipping");
   if (/agent|multi-agent|orchestrat|workflow|planner|specialist|eval|trace|audit trail/.test(m)) topics.push("orchestration");
+
+  // Governance / senior reviewer questions
+  if (/governance|audit|immutab|tamper|hash.?chain|invariant|production.?grade|tenant.?leak|cross.?tenant|isolation|fail.?closed|refus(e|ed|al)|human.?in.?the.?loop|unsafe ai|prevent.*action/.test(m)) {
+    topics.push("governance");
+  }
 
   // Mixed/compare queries: include stack context by default when comparing products.
   if (/compare|vs\.?/.test(m) && topics.some((t) => t.startsWith("products."))) topics.push("stack");
@@ -156,6 +162,23 @@ export function buildKbForTopics(topics: Topic[]): { kb: string; sources: Source
     if (topic === "availability" && availability) {
       chosen.push(availability);
       sources.add("Availability & Contact (public)");
+    }
+
+    if (topic === "governance") {
+      // Include governance worldview, FAQ, and all governance-heavy products
+      const worldview = findSection(sections, (s) => s.level === 2 && s.title.startsWith("Governance Worldview"));
+      const faq = findSection(sections, (s) => s.level === 2 && s.title.startsWith("FAQ"));
+      if (worldview) chosen.push(worldview);
+      if (faq) chosen.push(faq);
+      // Include Truvesta + Ardura + Equira as primary governance products
+      const truvestaSection = product("Truvesta");
+      const arduraSection = product("Ardura");
+      const equiraSection = product("Equira");
+      if (truvestaSection) chosen.push(truvestaSection);
+      if (arduraSection) chosen.push(arduraSection);
+      if (equiraSection) chosen.push(equiraSection);
+      sources.add("Products (public)");
+      sources.add("CV (public)");
     }
 
     if (topic === "products.truvesta") addProduct("Truvesta");

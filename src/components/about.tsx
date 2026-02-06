@@ -43,11 +43,11 @@ export function About() {
         <div className="flex-1">
           <p className="text-base sm:text-lg text-white/80 leading-relaxed">
             I&apos;m an AI-native technical leader with deep fintech background. I orchestrate AI agents to
-            ship enterprise products in weeks, not months — without sacrificing governance, security,
-            or auditability.
+            ship production systems where governance, security,
+            and auditability are enforced by infrastructure — not policy.
           </p>
           <p className="mt-3 text-base sm:text-lg text-[rgb(var(--accent))] font-medium">
-            I ship at startup speed with enterprise-grade auditability.
+            Governance-first systems — auditability enforced, not promised.
           </p>
 
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">

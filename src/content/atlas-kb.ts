@@ -19,10 +19,19 @@ export const ATLAS_KB_SOURCES = [
 export const ATLAS_KB = `
 # Mahmood Asadi — AI-Native Technical Leader
 
+## Governance Worldview
+Mahmood designs systems that refuse power they haven't earned the right to exercise.
+- Integrity at rest: audit history cannot be rewritten (Truvesta — hash-chained logs, DB immutability)
+- Restraint in motion: AI predictions inform operators but never auto-execute (Ardura — human-in-the-loop)
+- Governance as infrastructure: constraints are enforced by code, not policy (Equira — tenant isolation, phase gates)
+- Structured uncertainty: AI outputs are hypotheses with declared limits, never conclusions (Scanminers)
+- Finura and Chessio apply lighter governance appropriate to their domains (content disclaimers, skill-gated progression)
+This worldview is consistent across all 6 products, 4 industries, and the CV.
+
 ## Professional Summary
-- AI-native technical leader shipping enterprise products fast without sacrificing governance
+- AI-native technical leader who designs governance-first systems where auditability, human control, and failure containment are enforced by infrastructure — not policy
 - Built and deployed 6 production platforms across fintech, edtech, mining/GeoTech, and AI infrastructure
-- Uses vendor-neutral, LLM-assisted multi-agent workflows (structured handoffs, shared state, verification gates)
+- Applied the same governance principles — tamper-evident audit trails, human-in-the-loop decision gates, tenant-isolated execution — across every domain
 - 10+ years brokerage domain depth: CRM, dealing desk intelligence, portals, social trading, payments, online trading platform integrations
 - Location: Cyprus (open to relocation)
 - Contact: mahmood@asadi.ai | linkedin.com/in/mahmoodasadi1 | asadi.ai
@@ -118,6 +127,29 @@ Progression is gated by demonstrated skill, not engagement metrics. Advancement 
 - Not a "move fast and break things" person — moves fast AND maintains governance
 - Not interested in hype-driven projects — prefers proof-driven delivery
 - Not a solo cowboy — builds systems for teams to scale
+
+## FAQ — Senior Reviewer Questions
+These are common questions from CTOs and Staff+ engineers. Atlas should route to the relevant product depth blocks above.
+
+**"Is this production-grade?"**
+Answer with Truvesta's governance depth: hash-chained audit logs, DB-level immutability triggers, CI that actively falsifies invariants. Reference artifacts: invariants-verify.sh, 017_audit_immutable.sql. Point to the Evidence section on asadi.ai for artifact requests.
+
+**"How do you prevent unsafe AI actions?"**
+Answer with Ardura's governance depth: AI predictions surface as recommendations only, never auto-execute. Every automation rule carries an evaluation trace. Operator approval is a hard requirement. Reference: the explicit rejection of auto-execution.
+
+**"How do you handle auditability?"**
+Answer with Truvesta's audit chain: synchronous writes (business logic fails if audit fails), hash-chained events, DB triggers blocking UPDATE/DELETE. Auth failures audited alongside successes.
+
+**"How do you prevent cross-tenant leakage?"**
+Answer with Equira's governance depth: tenant isolation at the orchestration layer, no shared agent memory, phase-gated execution, evidence packs with provenance on every output. Enforced by infrastructure, not configuration.
+
+**"What did you refuse to build?"**
+Key refusals across the portfolio:
+- Async audit writes (Truvesta) — convenience traded for deterministic traceability
+- Auto-execution of AI decisions (Ardura) — operator judgment is a hard requirement
+- Shared-context multi-agent execution (Equira) — each tenant runs in an isolated cage
+- High-confidence framing of uncertain outputs (Scanminers) — false certainty rejected
+- Implicit trading performance claims (Finura) — content governance enforced at platform layer
 
 ## Hard Scope
 Atlas answers only from this knowledge pack. No web browsing. No guessing. No private info.
