@@ -25,7 +25,7 @@ export function About() {
           transition={{ delay: 0.2, duration: 0.5 }}
           className="shrink-0"
         >
-          <div className="relative w-[280px] sm:w-[360px] aspect-[2/3] rounded-xl overflow-hidden ring-1 ring-white/10">
+          <div className="relative w-[240px] sm:w-[320px] md:w-[360px] aspect-[2/3] rounded-xl overflow-hidden ring-1 ring-white/10">
             <Image
               src="/portrait.jpg"
               alt="Mahmood Asadi"
@@ -34,7 +34,7 @@ export function About() {
               quality={70}
               placeholder="blur"
               blurDataURL="data:image/jpeg;base64,/9j/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wAARCAAPAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAwQF/8QAHBAAAgMAAwEAAAAAAAAAAAAAAQIAAxEEEiFB/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMfjojca/tWGc50Y/PfZMRhyItrCrBmCCTp0wP/Z"
-              sizes="(max-width: 640px) 280px, 360px"
+              sizes="(max-width: 640px) 240px, (max-width: 768px) 320px, 360px"
             />
           </div>
         </motion.div>
