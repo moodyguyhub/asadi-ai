@@ -5,10 +5,10 @@ import { site } from "@/content/site";
 
 const links = [
   { label: "Work", href: "#work" },
+  { label: "Contact", href: "#contact" },
   { label: "About", href: "#about" },
   { label: "Evidence", href: "#evidence" },
   { label: "Stack", href: "#stack" },
-  { label: "Contact", href: "#contact" },
 ];
 
 export function TopNav() {
@@ -22,7 +22,7 @@ export function TopNav() {
           {site.name}
         </Link>
         <div
-          className="flex items-center gap-4 sm:gap-8 overflow-x-auto whitespace-nowrap max-w-[70vw] sm:max-w-none pl-2"
+          className="flex items-center gap-3 sm:gap-8 overflow-x-auto whitespace-nowrap max-w-[78vw] sm:max-w-none pl-2 pr-2"
           role="navigation"
           aria-label="Page sections"
         >
