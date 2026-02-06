@@ -61,6 +61,9 @@ AI-native CRM with churn prediction and retention automation.
 - Automation rules + evaluation traces
 - Stack: Next.js, Prisma, PostgreSQL
 
+**Ardura Governance Depth:**
+AI predictions are surfaced as recommendations to operators — they never auto-execute, even when model confidence is high. Every automation rule carries an evaluation trace: model confidence, input features, and decision rationale. Operators approve, modify, or reject each action, and that decision is logged with full attribution. The 2-week build was achieved through disciplined component reuse from Truvesta's governance stack, not by cutting safety. Auto-execution of AI-driven retention actions was explicitly rejected — operator judgment is a hard requirement, not a convenience layer.
+
 ### Equira (AI Infrastructure) — Built in 4 weeks
 Sovereign AI workspace for multi-tenant agent orchestration.
 - Multi-agent orchestration with phase gates

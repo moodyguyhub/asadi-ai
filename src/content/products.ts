@@ -59,20 +59,31 @@ export const products: Product[] = [
     id: "ardura",
     name: "Ardura",
     oneLiner: "AI-native CRM with churn prediction and retention automation.",
-    businessImpact: "Retention workflows driven by churn signals (stabilizes revenue in high-volume funnels).",
+    businessImpact: "AI recommends, humans decide — churn signals route to operators, never auto-execute, with full evaluation traces.",
     industry: "Fintech",
     builtIn: "2 weeks",
     stack: ["Next.js", "Prisma", "PostgreSQL", "Segmentation", "Automation"],
-    proofPoints: ["Retention workflows", "Predictive signals (planned/iterative)"],
+    proofPoints: [
+      "AI predictions surfaced, never auto-executed",
+      "Every automation rule carries an evaluation trace",
+      "Component reuse from Truvesta — 2-week build",
+    ],
     screenshot: { src: "/products/ardura.png", alt: "Ardura UI screenshot" },
     details: {
       problem:
-        "Broker CRMs often fail to drive retention because insights and actions are disconnected.",
+        "Broker CRMs fail at retention because AI signals go straight to automation without operator judgment — creating liability and silent churn when models drift.",
       approach: [
-        "Signal → segment → action loops",
-        "Automation rules + evaluation traces (governable)",
+        "Churn predictions surface as recommendations, never trigger actions directly",
+        "Human-in-the-loop: operators approve, modify, or reject every automation rule",
+        "Evaluation traces attached to every prediction — model confidence, input features, decision rationale",
+        "Segment → action loops are auditable: who approved what, when, and why",
+        "Component reuse from Truvesta governance stack — shipped in 2 weeks without cutting safety",
       ],
-      outcomes: ["Operational visibility and actionability designed into the UI"],
+      outcomes: [
+        "Zero autonomous actions — every retention intervention is operator-approved",
+        "Auditable decision chain from churn signal to customer action",
+        "2-week delivery via disciplined reuse, not scope cuts",
+      ],
       role: ["Product engineering", "Full-stack implementation"],
       links: [
         { label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" },
