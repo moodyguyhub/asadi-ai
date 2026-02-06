@@ -139,110 +139,130 @@
   </style>
 </head>
 <body>
-  <h1>10-Minute Call</h1>
-  <p class="subtitle">Caller Notes — Print &amp; Keep Visible</p>
+  <h1>10-Minute Strategy Consult</h1>
+  <p class="subtitle">Risk-Alignment Choreography — Print &amp; Keep Visible</p>
 
   <!-- FRAME -->
   <div class="section">
     <div class="section-header">
       <span class="time">0:00</span>
-      <span class="label">Frame + Agenda</span>
+      <span class="label">Opening Frame (Authority, Not Rapport)</span>
     </div>
     <div class="verbatim">
-      "I'll do this in 10 minutes: 60 seconds context, 6 minutes proof in the UI, then 3 minutes on your constraints and next steps."
+      "Before we jump in, I want to be clear about how I usually use these 30 minutes. I don't pitch solutions. I try to understand where risk is accumulating in your system, and whether it's structural or accidental."
     </div>
-    <p class="action">→ Camera on, still posture, then share screen.</p>
+    <p class="action">→ Camera on. Still posture. Do NOT ask how their day is. Do NOT ask "Does that sound okay?" Do NOT mention your background yet.</p>
   </div>
 
-  <!-- HOOK -->
+  <!-- CALIBRATION -->
   <div class="section">
     <div class="section-header">
-      <span class="time">0:45</span>
-      <span class="label">The Hook</span>
+      <span class="time">1:00</span>
+      <span class="label">The Calibration Question (Core Move)</span>
     </div>
     <div class="verbatim">
-      "I ship at startup speed — with governance enforced at the infrastructure layer. The reason that matters is: speed without governance creates risk. My work is built around receipts—logs, policies, and deterministic behavior."
+      "Where does your system currently have the power to do something irreversible without a human consciously approving it?"
     </div>
-    <p class="action">→ Pause 2 seconds. Screen: portfolio hero only.</p>
+    <p class="action">→ Then STOP TALKING. Let them answer fully. Every senior leader has an answer. This exposes AI risk, audit gaps, automation shortcuts, and org/process debt.</p>
   </div>
 
-  <!-- PROOF #1 -->
+  <!-- MIRROR -->
   <div class="section">
     <div class="section-header">
-      <span class="time">1:45</span>
-      <span class="label">Proof #1 — One Product</span>
+      <span class="time">3:00</span>
+      <span class="label">Mirror + Reframe (Judgment Display)</span>
     </div>
     <div class="verbatim">
-      "This is [Product]. The outcome is [Outcome line]. The proof is in the audit trail and idempotent workflows—every decision produces a receipt."
-    </div>
-    <p class="action">→ Open product card. Point to ONE receipt element. Stop talking while you zoom.</p>
-  </div>
-
-  <!-- PROOF #2 -->
-  <div class="section">
-    <div class="section-header">
-      <span class="time">4:30</span>
-      <span class="label">Proof #2 — Pattern Travels</span>
-    </div>
-    <div class="verbatim">
-      "Different domain, same spine: tenant-safe defaults, traceability, and fail-closed behavior."
+      "What I'm hearing is [X]. The risk isn't that it exists — it's that it's implicit rather than enforced."
     </div>
     <div class="verbatim" style="margin-top: 8px;">
-      "That's why these ship in weeks—reuse the governed backbone, swap the domain modules."
+      "Is that something you're intentionally comfortable with, or something that just grew over time?"
     </div>
-    <p class="action">→ Show second product (30–45 sec max).</p>
+    <p class="action">→ You're naming unconscious risk, not solving yet. This is where CTOs decide if you're a peer. Use only ONE follow-up.</p>
   </div>
 
-  <!-- DISCOVERY -->
+  <!-- PROOF -->
   <div class="section">
     <div class="section-header">
-      <span class="time">6:30</span>
-      <span class="label">Discovery — 3 Questions Only</span>
+      <span class="time">5:00</span>
+      <span class="label">One Constraint Story (Proof Without Bragging)</span>
     </div>
-    <ol class="questions">
-      <li>"What's the highest-cost failure mode you're trying to avoid?"</li>
-      <li>"What's your data residency / security boundary?"</li>
-      <li>"What decision needs to become faster or safer in the next 30–60 days?"</li>
-    </ol>
-    <p class="action">→ Authority Pause on interruptions: stop, nod once, 1-sec delay, then answer.</p>
+    <p class="action">→ Pick ONE example that matches their risk. No timelines. No product names unless asked. No "I built." Frame as: decision → tradeoff → risk removed.</p>
+    <div class="variant">
+      <p class="variant-label">If they mention audit / compliance:</p>
+      <div class="verbatim">
+        "In one system I worked on, we rejected async audit writes entirely. If the audit log couldn't be written synchronously, the business action failed. It slowed things down—but it removed an entire class of forensic risk."
+      </div>
+    </div>
+    <div class="variant">
+      <p class="variant-label">If they mention AI / automation:</p>
+      <div class="verbatim">
+        "In another case, we had high-confidence predictions, but refused auto-execution. Every decision expired unless a human approved it. Accuracy wasn't the problem—liability was."
+      </div>
+    </div>
+  </div>
+
+  <!-- INVITE -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time">7:00</span>
+      <span class="label">Invite the Real Question</span>
+    </div>
+    <div class="verbatim">
+      "Given what we've talked about, what would you want to be more confident about in your system six months from now?"
+    </div>
+    <p class="action">→ This shifts them from curiosity → ownership, features → outcomes. Let them talk.</p>
   </div>
 
   <!-- CLOSE -->
   <div class="section">
     <div class="section-header">
-      <span class="time">8:30</span>
-      <span class="label">The Close</span>
-    </div>
-    <div class="variant">
-      <p class="variant-label">If fit is strong:</p>
-      <div class="verbatim">
-        "Next step: a 30-minute strategy consult where we map your constraints → a scoped proof. I'll leave with a 1-page plan and measurable success criteria."
-      </div>
-    </div>
-    <div class="variant">
-      <p class="variant-label">If fit is uncertain:</p>
-      <div class="verbatim">
-        "Next step: a 15-minute fit check to confirm scope and constraints. If it's viable, we book the strategy consult."
-      </div>
-    </div>
-  </div>
-
-  <!-- EXIT -->
-  <div class="section">
-    <div class="section-header">
-      <span class="time">9:30</span>
-      <span class="label">Exit Line</span>
+      <span class="time">9:00</span>
+      <span class="label">Close Without Selling</span>
     </div>
     <div class="verbatim">
-      "Before we end—what would make this a 'yes' internally? Security sign-off, ROI, or integration feasibility?"
+      "There are two ways this usually goes. I can summarize a few governance patterns that tend to reduce this kind of risk, or we can go deeper with artifacts and architecture in a longer session. Either is fine—what's more useful right now?"
     </div>
-    <div class="verbatim" style="margin-top: 8px;">
-      "Perfect. I'll follow up with the exact artifacts you need."
+    <p class="action">→ You offer a decision, not a pitch. If they choose the second option, the booking CTA aligns naturally.</p>
+  </div>
+
+  <!-- RED FLAGS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time"></span>
+      <span class="label">Red Flags — Never Say</span>
+    </div>
+    <ol class="questions">
+      <li>"We can build this quickly"</li>
+      <li>"I've seen this many times"</li>
+      <li>"Best practice"</li>
+      <li>Any vendor or tool name unless they ask</li>
+      <li>Talking more than 60% of the time — silence is leverage</li>
+    </ol>
+  </div>
+
+  <!-- FORKS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="time"></span>
+      <span class="label">Caller Forks</span>
+    </div>
+    <div class="variant">
+      <p class="variant-label">Founder:</p>
+      <p class="action">Emphasize irreversible decisions scaling faster than governance.</p>
+    </div>
+    <div class="variant">
+      <p class="variant-label">CTO / CISO:</p>
+      <p class="action">Emphasize implicit vs enforced constraints.</p>
+    </div>
+    <div class="variant">
+      <p class="variant-label">Investor / Partner:</p>
+      <p class="action">Emphasize downside containment and explainability under stress.</p>
     </div>
   </div>
 
   <div class="footer">
-    asadi.ai — 10-Minute Call Choreography
+    asadi.ai — 10-Minute Strategy Consult Choreography
   </div>
 </body>
 </html>
