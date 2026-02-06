@@ -30,10 +30,10 @@ export function About() {
               src="/portrait.jpg"
               alt="Mahmood Asadi"
               fill
-              className="object-cover object-top"
+              className="object-cover object-center"
               quality={70}
               placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wAARCAANAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgQF/8QAHxAAAQQCAgMAAAAAAAAAAAAAAQACAxESIQQTIlHx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAwDAQACEQMRAD8AzuK58XEmZmRnVAe/in6YxovSdMXAeIFCtaRzrVBWFf/Z"
+              blurDataURL="data:image/jpeg;base64,/9j/2wBDABsSFBcUERsXFhceHBsgKEIrKCUlKFE6PTBCYFVlZF9VXVtqeJmBanGQc1tdhbWGkJ6jq62rZ4C8ybqmx5moq6T/2wBDARweHigjKE4rK06kbl1upKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKSkpKT/wAARCAANAAoDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAQIDBf/EAB4QAAICAgIDAAAAAAAAAAAAAAECAAMREiEyQVGR/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMSqhGpdm7canP2RK4JHqEWuFC7cDxEgf//Z"
               sizes="(max-width: 640px) 280px, 360px"
             />
           </div>
