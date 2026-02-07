@@ -44,7 +44,7 @@ function ProductCard({
           src={product.screenshot.src}
           alt={product.screenshot.alt}
           hint={`public${product.screenshot.src}`}
-          featured={product.featured || product.id === "chessio"}
+          featured
         />
       </div>
 
@@ -152,10 +152,10 @@ export function ProductsBento({ products }: { products: Product[] }) {
         </div>
       </motion.div>
 
-      <div className="mt-8 grid grid-cols-1 md:grid-cols-6 gap-4">
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-5">
         {products.map((p, index) => {
           const spanFor = (pId: string) => {
-            if (pId === "truvesta") return "md:col-span-6";
+            if (pId === "truvesta") return "md:col-span-4";
             return "md:col-span-2";
           };
 
