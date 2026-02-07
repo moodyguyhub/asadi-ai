@@ -294,9 +294,12 @@ export function GateDemoPage() {
 
       {/* Scenario Selector */}
       <div>
-        <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-4">
+        <h2 className="text-sm font-semibold text-zinc-400 uppercase tracking-wider mb-1">
           Select Scenario
         </h2>
+        <p className="text-xs text-zinc-500 mb-4">
+          Pick one of the scenarios below to begin
+        </p>
         <ScenarioSelector
           scenarios={scenarios}
           selected={scenarioId}

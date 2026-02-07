@@ -11,14 +11,17 @@ export async function GET() {
   const admin = await requireAdmin();
   if (isErrorResponse(admin)) return admin;
 
-  // Prod-only guard: prevent OAuth connect on preview deployments
-  // where redirect URIs won't match the OAuth app configuration.
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
-  if (siteUrl && !siteUrl.startsWith("https://asadi.ai")) {
-    return NextResponse.json(
-      { error: "OAuth connect is restricted to production. Set NEXT_PUBLIC_SITE_URL=https://asadi.ai to enable." },
-      { status: 403 },
-    );
+  // Prod-only guard: prevent OAuth connect on preview deployments where redirect
+  // URIs won't match the OAuth app configuration.
+  // Local/dev should be allowed so you can test end-to-end.
+  if (process.env.NODE_ENV === "production") {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+    if (siteUrl && !siteUrl.startsWith("https://asadi.ai")) {
+      return NextResponse.json(
+        { error: "OAuth connect is restricted to production. Set NEXT_PUBLIC_SITE_URL=https://asadi.ai to enable." },
+        { status: 403 },
+      );
+    }
   }
 
   const clientId = process.env.X_CLIENT_ID;

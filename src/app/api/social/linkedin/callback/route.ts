@@ -50,8 +50,8 @@ export async function GET(req: Request) {
   const tokens = await tokenRes.json();
   const accessToken = tokens.access_token;
 
-  // Get user profile
-  const profileRes = await fetch("https://api.linkedin.com/v2/userinfo", {
+  // Get user profile via /v2/me (works without openid scope)
+  const profileRes = await fetch("https://api.linkedin.com/v2/me", {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 
@@ -61,8 +61,8 @@ export async function GET(req: Request) {
   }
 
   const profile = await profileRes.json();
-  const externalId = profile.sub;
-  const displayName = profile.name || `${profile.given_name || ""} ${profile.family_name || ""}`.trim();
+  const externalId = profile.id;
+  const displayName = `${profile.localizedFirstName || ""} ${profile.localizedLastName || ""}`.trim() || profile.id;
 
   // Upsert social account with encrypted tokens
   const tokenExpiry = tokens.expires_in
@@ -80,16 +80,16 @@ export async function GET(req: Request) {
       encryptedTokens: encryptTokens(tokens),
       tokenExpiry,
       displayName,
-      scopes: ["openid", "profile", "w_member_social"],
+      scopes: ["profile", "w_member_social"],
     },
     create: {
       platform: "linkedin",
       externalAccountId: externalId,
       displayName,
-      profileUrl: `https://www.linkedin.com/in/${profile.email || externalId}`,
+      profileUrl: `https://www.linkedin.com/in/${profile.vanityName || externalId}`,
       encryptedTokens: encryptTokens(tokens),
       tokenExpiry,
-      scopes: ["openid", "profile", "w_member_social"],
+      scopes: ["profile", "w_member_social"],
     },
   });
 
