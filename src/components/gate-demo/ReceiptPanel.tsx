@@ -91,9 +91,15 @@ export function ReceiptPanel({
         </span>
       </div>
 
-      {/* Verdict */}
+      {/* Verdict — reflects final outcome after human decision */}
       <div className="flex justify-center">
-        <VerdictBadge verdict={evidencePack.evaluation.verdict} compact />
+        {evidencePack.approval?.status === "APPROVED" ? (
+          <VerdictBadge verdict="AUTHORIZED" compact />
+        ) : evidencePack.approval?.status === "REJECTED" ? (
+          <VerdictBadge verdict="BLOCKED" compact />
+        ) : (
+          <VerdictBadge verdict={evidencePack.evaluation.verdict} compact />
+        )}
       </div>
 
       {/* Hashes */}
