@@ -36,7 +36,7 @@ export function ProductScreenshot({
             src={srcWithCacheBust}
             alt={alt}
             fill
-            className="object-cover object-center opacity-100 contrast-110 saturate-110 group-hover:contrast-125 group-hover:saturate-125 group-hover:scale-[1.02] transition duration-300"
+            className={`${featured ? "object-contain" : "object-cover"} object-center opacity-100 contrast-110 saturate-110 group-hover:contrast-125 group-hover:saturate-125 group-hover:scale-[1.02] transition duration-300`}
             onError={() => setOk(false)}
             sizes={featured ? "(max-width: 640px) 90vw, 1200px" : "(max-width: 640px) 90vw, 600px"}
             priority={featured}
