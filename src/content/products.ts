@@ -54,6 +54,38 @@ export const products: Product[] = [
     },
   },
   {
+    id: "equira",
+    name: "Equira",
+    oneLiner: "Sovereign AI workspace for multi-tenant agent orchestration.",
+    businessImpact: "Every agent runs in a tenant-isolated cage with phase gates — no shared context, no silent failures, provenance on every output.",
+    industry: "AI Infrastructure",
+    stack: ["Next.js", "Python", "FastAPI", "Orchestration", "Evidence Packs"],
+    proofPoints: [
+      "Hard tenant isolation — no cross-tenant data leakage path",
+      "Phase gates: agents cannot advance without verification",
+      "Evidence packs attached to every workflow output",
+    ],
+    screenshot: { src: "/products/equira.png", alt: "Equira UI screenshot" },
+    details: {
+      problem:
+        "Multi-tenant AI platforms routinely share context across boundaries and let agents chain unchecked — creating data leakage risk and unattributable failures.",
+      approach: [
+        "Tenant isolation enforced at the orchestration layer — no shared agent memory or cross-tenant context",
+        "Phase gates between agent steps: output must pass verification before the next agent runs",
+        "Evidence packs (receipts + provenance) attached to every workflow completion",
+        "Structured handoffs with explicit input/output contracts — no implicit state passing",
+        "Failure stops the chain — agents cannot skip gates or self-promote to the next phase",
+      ],
+      outcomes: [
+        "Zero cross-tenant data exposure by design, not configuration",
+        "Every workflow output is traceable to its inputs and agent decisions",
+        "Governance patterns from Truvesta/Ardura generalized into reusable infrastructure",
+      ],
+      role: ["Architecture", "Orchestration design", "Platform build"],
+      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
+    },
+  },
+  {
     id: "ardura",
     name: "Ardura",
     oneLiner: "AI-native CRM with churn prediction and retention automation.",
@@ -85,38 +117,6 @@ export const products: Product[] = [
       links: [
         { label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" },
       ],
-    },
-  },
-  {
-    id: "equira",
-    name: "Equira",
-    oneLiner: "Sovereign AI workspace for multi-tenant agent orchestration.",
-    businessImpact: "Every agent runs in a tenant-isolated cage with phase gates — no shared context, no silent failures, provenance on every output.",
-    industry: "AI Infrastructure",
-    stack: ["Next.js", "Python", "FastAPI", "Orchestration", "Evidence Packs"],
-    proofPoints: [
-      "Hard tenant isolation — no cross-tenant data leakage path",
-      "Phase gates: agents cannot advance without verification",
-      "Evidence packs attached to every workflow output",
-    ],
-    screenshot: { src: "/products/equira.png", alt: "Equira UI screenshot" },
-    details: {
-      problem:
-        "Multi-tenant AI platforms routinely share context across boundaries and let agents chain unchecked — creating data leakage risk and unattributable failures.",
-      approach: [
-        "Tenant isolation enforced at the orchestration layer — no shared agent memory or cross-tenant context",
-        "Phase gates between agent steps: output must pass verification before the next agent runs",
-        "Evidence packs (receipts + provenance) attached to every workflow completion",
-        "Structured handoffs with explicit input/output contracts — no implicit state passing",
-        "Failure stops the chain — agents cannot skip gates or self-promote to the next phase",
-      ],
-      outcomes: [
-        "Zero cross-tenant data exposure by design, not configuration",
-        "Every workflow output is traceable to its inputs and agent decisions",
-        "Governance patterns from Truvesta/Ardura generalized into reusable infrastructure",
-      ],
-      role: ["Architecture", "Orchestration design", "Platform build"],
-      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
     },
   },
   {

@@ -155,8 +155,7 @@ export function ProductsBento({ products }: { products: Product[] }) {
       <div className="mt-8 grid grid-cols-1 md:grid-cols-6 gap-4">
         {products.map((p, index) => {
           const spanFor = (pId: string) => {
-            if (pId === "truvesta") return "md:col-span-4";
-            if (pId === "finura" || pId === "chessio") return "md:col-span-3";
+            if (pId === "truvesta") return "md:col-span-6";
             return "md:col-span-2";
           };
 
