@@ -23,11 +23,11 @@ export function ProductScreenshot({
   const srcWithCacheBust =
     process.env.NODE_ENV === "development" ? `${src}?id=${instanceId}` : src;
 
-  // Featured cards get taller screenshots
-  const heightClass = featured ? "h-56 sm:h-64" : "h-44 sm:h-52";
+  // Consistent aspect ratio so all cards in a row match height
+  const aspectClass = featured ? "aspect-[16/9]" : "aspect-[16/9]";
 
   return (
-    <div className={`relative ${heightClass} rounded-t-xl overflow-hidden border-b border-white/10 bg-black/20 ring-1 ring-inset ring-white/5`}>
+    <div className={`relative ${aspectClass} rounded-t-xl overflow-hidden border-b border-white/10 bg-black/20 ring-1 ring-inset ring-white/5`}>
       {ok ? (
         <>
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/25 via-transparent to-transparent z-10" />
