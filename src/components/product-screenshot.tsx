@@ -27,7 +27,8 @@ export function ProductScreenshot({
   const aspectClass = featured ? "aspect-[16/9]" : "aspect-[16/9]";
 
   return (
-    <div className={`relative ${aspectClass} rounded-t-xl overflow-hidden border-b border-white/10 bg-black/20 ring-1 ring-inset ring-white/5`}>
+    <div className={featured ? "pt-4 px-4" : ""}>
+    <div className={`relative ${aspectClass} overflow-hidden border-b border-white/10 bg-black/20 ring-1 ring-inset ring-white/5 ${featured ? "rounded-xl" : "rounded-t-xl"}`}>
       {ok ? (
         <>
           <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-black/25 via-transparent to-transparent z-10" />
@@ -56,6 +57,7 @@ export function ProductScreenshot({
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }
