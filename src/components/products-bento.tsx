@@ -133,11 +133,19 @@ function ProductDialog({ product, open, onClose }: { product: Product | null; op
       </DialogBody>
 
       <DialogActions>
-        {product.details.links.map((l) => (
-          <Button key={l.href} href={l.href} color="dark/zinc">
-            {l.label}
-          </Button>
-        ))}
+        {product.details.links.map((l) => {
+          const isExternal = l.href.startsWith("http");
+          return (
+            <Button
+              key={l.href}
+              href={l.href}
+              color="dark/zinc"
+              {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            >
+              {l.label}
+            </Button>
+          );
+        })}
       </DialogActions>
     </Dialog>
   );
