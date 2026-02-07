@@ -6,7 +6,7 @@ export function JsonLd() {
     url: "https://asadi.ai",
     jobTitle: "AI-Native Technical Leader",
     description:
-      "6 products shipped across 4 industries. Agent-orchestrated, audit-ready delivery.",
+      "7 products shipped across 4 industries. Agent-orchestrated, audit-ready delivery.",
     sameAs: ["https://www.linkedin.com/in/mahmoodasadi1/"],
     knowsAbout: [
       "AI Engineering",
@@ -25,7 +25,7 @@ export function JsonLd() {
     name: "Mahmood Asadi — AI-Native Technical Leader",
     url: "https://asadi.ai",
     description:
-      "Portfolio of Mahmood Asadi — 6 products, 4 industries. Governance enforced by infrastructure, not policy.",
+      "Portfolio of Mahmood Asadi — 7 products, 4 industries. Governance enforced by infrastructure, not policy.",
   };
 
   return (

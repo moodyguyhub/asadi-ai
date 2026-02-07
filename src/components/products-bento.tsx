@@ -147,7 +147,7 @@ export function ProductsBento({ products }: { products: Product[] }) {
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">What I&apos;ve Built</h2>
           <p className="mt-3 text-zinc-400 max-w-2xl leading-relaxed">
-            Six shipped builds across four industries. Click a card for details.
+            Seven shipped builds across four industries. Click a card for details.
           </p>
         </div>
       </motion.div>

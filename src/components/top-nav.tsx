@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { site } from "@/content/site";
 
-const links = [
+const anchorLinks = [
   { label: "Work", href: "#work" },
   { label: "Contact", href: "#contact" },
   { label: "About", href: "#about" },
@@ -11,7 +12,14 @@ const links = [
   { label: "Stack", href: "#stack" },
 ];
 
+const pageLinks = [
+  { label: "Gate Demo", href: "/gate-demo" },
+];
+
 export function TopNav() {
+  const pathname = usePathname();
+  const isHome = pathname === "/";
+
   return (
     <nav className="sticky top-0 z-50 -mx-4 sm:-mx-6 lg:-mx-10 px-4 sm:px-6 lg:px-10 bg-[rgba(var(--background),0.95)] backdrop-blur-xl border-b border-white/[0.06]">
       <div className="flex items-center justify-between h-14 sm:h-16 max-w-6xl mx-auto">
@@ -24,9 +32,9 @@ export function TopNav() {
         <div
           className="flex items-center gap-3 sm:gap-8 overflow-x-auto whitespace-nowrap max-w-[78vw] sm:max-w-none pl-2 pr-2"
           role="navigation"
-          aria-label="Page sections"
+          aria-label="Site navigation"
         >
-          {links.map((l) => (
+          {isHome && anchorLinks.map((l) => (
             <a
               key={l.href}
               href={l.href}
@@ -35,6 +43,22 @@ export function TopNav() {
               {l.label}
               <span className="absolute -bottom-1 left-0 w-0 h-px bg-[rgb(var(--accent))] group-hover:w-full transition-all duration-300" />
             </a>
+          ))}
+          {pageLinks.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={`shrink-0 text-xs sm:text-sm transition-colors duration-200 relative group ${
+                pathname === l.href
+                  ? "text-[rgb(var(--accent))]"
+                  : "text-zinc-400 hover:text-white"
+              }`}
+            >
+              {l.label}
+              <span className={`absolute -bottom-1 left-0 h-px bg-[rgb(var(--accent))] transition-all duration-300 ${
+                pathname === l.href ? "w-full" : "w-0 group-hover:w-full"
+              }`} />
+            </Link>
           ))}
         </div>
       </div>

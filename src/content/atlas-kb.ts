@@ -26,11 +26,12 @@ Mahmood designs systems that refuse power they haven't earned the right to exerc
 - Governance as infrastructure: constraints are enforced by code, not policy (Equira — tenant isolation, phase gates)
 - Structured uncertainty: AI outputs are hypotheses with declared limits, never conclusions (Scanminers)
 - Finura and Chessio apply lighter governance appropriate to their domains (content disclaimers, skill-gated progression)
-This worldview is consistent across all 6 products, 4 industries, and the CV.
+Asadi Gate applies these principles to agentic commerce: fail-closed policy cascade, SHA-256 evidence packs, and human-in-the-loop approval for escalated transactions.
+This worldview is consistent across all 7 products, 4 industries, and the CV.
 
 ## Professional Summary
 - AI-native technical leader who designs governance-first systems where auditability, human control, and failure containment are enforced by infrastructure — not policy
-- Built and deployed 6 production platforms across fintech, edtech, mining/GeoTech, and AI infrastructure
+- Built and deployed 7 production platforms across fintech, edtech, mining/GeoTech, and AI infrastructure
 - Applied the same governance principles — tamper-evident audit trails, human-in-the-loop decision gates, tenant-isolated execution — across every domain
 - 10+ years brokerage domain depth: CRM, dealing desk intelligence, portals, social trading, payments, online trading platform integrations
 - Location: Cyprus (open to relocation)
@@ -52,7 +53,7 @@ Mahmood's multi-agent workflow approach:
 5. Eval/trace logging for every run (audit trail)
 This powers Truvesta's AI-driven decisioning and Scanminers' document extraction.
 
-## Products Portfolio (6 products, 4 industries)
+## Products Portfolio (7 products, 4 industries)
 
 ### Truvesta (Fintech)
 Dealing desk intelligence for Forex/CFD brokers.
@@ -82,6 +83,21 @@ Sovereign AI workspace for multi-tenant agent orchestration.
 
 **Equira Governance Depth:**
 Equira is where the governance patterns proven in Truvesta and Ardura were generalized into reusable infrastructure. Tenant isolation is enforced at the orchestration layer — agents cannot access cross-tenant context or shared memory. Every agent step passes through a phase gate: outputs must be verified before the next agent runs, and failure halts the chain (agents cannot skip gates or self-promote). Every workflow completion carries an evidence pack with full provenance — inputs, agent decisions, and output attribution. Shared-context multi-agent execution was explicitly rejected; each tenant's agent runs in an isolated cage with explicit input/output contracts, no implicit state.
+
+### Asadi Gate (AI Infrastructure) — Interactive Demo
+Fail-closed governance layer for agentic commerce.
+- 7-rule policy cascade evaluated in strict priority order; default verdict is BLOCKED
+- SHA-256 evidence packs seal every decision: request, evaluation, verdict, and approval
+- Human-in-the-loop: transactions exceeding agent authority are escalated, never silently approved; approvals expire in 72 hours
+- Pure-function policy engine with zero side effects — deterministic and auditable
+- Stack: Next.js, TypeScript, Node.js crypto, Framer Motion
+
+**Asadi Gate Governance Depth:**
+Asadi Gate is an interactive demonstration of fail-closed governance applied to AI-initiated payment flows. The policy engine evaluates every transaction against a 7-rule priority cascade. If no rule explicitly authorizes, the transaction is blocked — this is the default, not an edge case. If the engine throws an error, the verdict is blocked. Escalated transactions require a human decision within 72 hours; the system has no auto-approve path. Every evaluation produces a SHA-256 evidence pack generated server-side, capturing the full decision chain. The client-side cascade animation shows the evaluation in real time, but displayed hashes come exclusively from the server. This is a simulated demo with deterministic scenarios — no real payments are processed — but the policy engine and evidence packs are fully functional.
+
+**Important disclaimer:** Asadi Gate is a demonstration. It uses fixed scenarios to illustrate governance patterns. It does not process real transactions.
+
+Try the demo: asadi.ai/gate-demo
 
 ### Scanminers (Mining/GeoTech) — Ongoing
 AI-powered mineral exploration targeting.
@@ -150,7 +166,11 @@ Key refusals across the portfolio:
 - Auto-execution of AI decisions (Ardura) — operator judgment is a hard requirement
 - Shared-context multi-agent execution (Equira) — each tenant runs in an isolated cage
 - High-confidence framing of uncertain outputs (Scanminers) — false certainty rejected
+- Auto-approve for escalated agent transactions (Asadi Gate) — approvals expire, never auto-approve
 - Implicit trading performance claims (Finura) — content governance enforced at platform layer
+
+**"What is the Gate demo?"**
+Answer with Asadi Gate's governance depth: fail-closed policy cascade, SHA-256 evidence packs, human-in-the-loop approval. It is a simulated demo with fixed scenarios — no real payments processed — but the policy engine and evidence generation are fully functional. Direct to asadi.ai/gate-demo to try it.
 
 ## Hard Scope
 Atlas answers only from this knowledge pack. No web browsing. No guessing. No private info.

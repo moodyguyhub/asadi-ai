@@ -120,6 +120,41 @@ export const products: Product[] = [
     },
   },
   {
+    id: "asadi-gate",
+    name: "Asadi Gate",
+    oneLiner: "Fail-closed governance layer for agentic commerce.",
+    businessImpact: "Every AI payment request is evaluated against a deterministic policy cascade — blocked by default, receipted by design, human-approved when required.",
+    industry: "AI Infrastructure",
+    stack: ["Next.js", "TypeScript", "SHA-256", "Policy Engine", "Evidence Packs"],
+    proofPoints: [
+      "7-rule priority cascade with fail-closed default",
+      "SHA-256 evidence packs generated server-side",
+      "Human-in-the-loop: no auto-approve, approvals expire",
+    ],
+    screenshot: { src: "/products/asadi-gate.png", alt: "Asadi Gate demo screenshot" },
+    details: {
+      problem:
+        "AI agents initiating financial transactions need governance that is deterministic, auditable, and fail-safe — not probabilistic filters that silently approve when they fail.",
+      approach: [
+        "Pure-function policy engine: 7 rules evaluated in strict priority order, no side effects",
+        "Fail-closed doctrine: if no rule matches or the engine errors, the transaction is blocked",
+        "Human escalation for transactions exceeding agent authority — approvals expire in 72 hours",
+        "SHA-256 evidence packs seal the full decision chain: request, evaluation, verdict, approval",
+        "Client-side cascade animation for transparency; server is the only source of displayed hashes",
+      ],
+      outcomes: [
+        "Zero silent authorizations — every decision path produces a verdict and a receipt",
+        "Governance patterns from Truvesta, Ardura, and Equira applied to agentic payment flows",
+        "Interactive demo available: run scenarios, inspect receipts, verify fail-closed behavior",
+      ],
+      role: ["Architecture", "Policy engine design", "Full-stack implementation"],
+      links: [
+        { label: "Try the Demo", href: "/gate-demo" },
+        { label: "Book a Deep-Dive", href: "https://cal.com/ctoalpha/deep-dive" },
+      ],
+    },
+  },
+  {
     id: "scanminers",
     name: "Scanminers",
     oneLiner: "AI-powered mineral exploration targeting.",

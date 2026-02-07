@@ -1,7 +1,7 @@
 export const site = {
   name: "Mahmood Asadi",
   title: "AI-Native Technical Leader",
-  hookLine1: "6 Products. 4 Industries.",
+  hookLine1: "7 Products. 4 Industries.",
   hookLine2: "Governance enforced.",
   // Primary CTA: 30-min Strategy Consult (recommended)
   ctaPrimary: { 
