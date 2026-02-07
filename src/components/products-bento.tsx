@@ -38,7 +38,7 @@ function ProductCard({
         colSpan
       )}
     >
-      {/* Screenshot on top with built-time badge */}
+      {/* Screenshot on top with hover overlay */}
       <div className="relative">
         <ProductScreenshot
           src={product.screenshot.src}
@@ -46,6 +46,12 @@ function ProductCard({
           hint={`public${product.screenshot.src}`}
           featured
         />
+        {/* Hover overlay */}
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center rounded-t-xl pointer-events-none">
+          <span className="text-white text-sm font-medium tracking-wide opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+            View Details →
+          </span>
+        </div>
       </div>
 
       {/* Content below */}
@@ -66,10 +72,15 @@ function ProductCard({
           </div>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          {product.stack.slice(0, 4).map((t) => (
-            <Badge key={t} color="zinc">{t}</Badge>
-          ))}
+        <div className="mt-4 flex items-center justify-between">
+          <div className="flex flex-wrap gap-2">
+            {product.stack.slice(0, 4).map((t) => (
+              <Badge key={t} color="zinc">{t}</Badge>
+            ))}
+          </div>
+          <span className="text-xs font-medium text-[rgb(var(--accent))] opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap ml-3">
+            Read more →
+          </span>
         </div>
       </div>
     </motion.button>
@@ -147,7 +158,7 @@ export function ProductsBento({ products }: { products: Product[] }) {
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">What I&apos;ve Built</h2>
           <p className="mt-3 text-zinc-400 max-w-2xl leading-relaxed">
-            Seven shipped builds across four industries. Click a card for details.
+            Seven shipped builds across four industries. Tap any card to explore the full story.
           </p>
         </div>
       </motion.div>

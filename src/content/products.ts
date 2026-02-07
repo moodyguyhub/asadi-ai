@@ -82,7 +82,7 @@ export const products: Product[] = [
         "Governance patterns from Truvesta/Ardura generalized into reusable infrastructure",
       ],
       role: ["Architecture", "Orchestration design", "Platform build"],
-      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
+      links: [{ label: "Case Study", href: "https://cal.com/ctoalpha/deep-dive" }],
     },
   },
   {
@@ -186,7 +186,10 @@ export const products: Product[] = [
         "Faster hypothesis generation without faster wrong decisions",
       ],
       role: ["System design", "AI workflow engineering"],
-      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
+      links: [
+        { label: "Visit Site", href: "https://scanminers.com/" },
+        { label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" },
+      ],
     },
   },
   {
@@ -215,7 +218,7 @@ export const products: Product[] = [
         "Zero cross-tenant learner data exposure",
       ],
       role: ["Architecture", "Platform implementation", "Governance"],
-      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
+      links: [{ label: "Case Study", href: "https://cal.com/ctoalpha/deep-dive" }],
     },
   },
   {
@@ -239,7 +242,7 @@ export const products: Product[] = [
       ],
       outcomes: ["Learner progression reflects actual skill, not platform stickiness"],
       role: ["Product build", "Full-stack"],
-      links: [{ label: "Request Demo", href: "https://cal.com/ctoalpha/deep-dive" }],
+      links: [{ label: "Case Study", href: "https://cal.com/ctoalpha/deep-dive" }],
     },
   },
 ];
